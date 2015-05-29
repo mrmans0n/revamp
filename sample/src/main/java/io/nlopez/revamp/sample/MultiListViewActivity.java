@@ -1,4 +1,4 @@
-package io.nlopez.smartadapters.sample;
+package io.nlopez.revamp.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,12 +8,12 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import io.nlopez.smartadapters.SmartAdapter;
-import io.nlopez.smartadapters.sample.model.Place;
-import io.nlopez.smartadapters.sample.model.User;
-import io.nlopez.smartadapters.sample.util.DataGenerator;
-import io.nlopez.smartadapters.sample.view.PlaceView;
-import io.nlopez.smartadapters.sample.view.UserView;
+import io.nlopez.revamp.SmartAdapter;
+import io.nlopez.revamp.sample.model.Place;
+import io.nlopez.revamp.sample.model.User;
+import io.nlopez.revamp.sample.util.DataGenerator;
+import io.nlopez.revamp.sample.view.PlaceView;
+import io.nlopez.revamp.sample.view.UserView;
 
 public class MultiListViewActivity extends Activity {
 

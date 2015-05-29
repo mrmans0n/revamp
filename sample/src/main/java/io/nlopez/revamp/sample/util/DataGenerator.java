@@ -1,12 +1,12 @@
-package io.nlopez.smartadapters.sample.util;
+package io.nlopez.revamp.sample.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import io.nlopez.smartadapters.sample.model.Place;
-import io.nlopez.smartadapters.sample.model.User;
+import io.nlopez.revamp.sample.model.Place;
+import io.nlopez.revamp.sample.model.User;
 
 /**
  * Created by mrm on 24/5/15.

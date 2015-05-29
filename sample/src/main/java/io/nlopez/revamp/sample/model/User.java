@@ -1,4 +1,4 @@
-package io.nlopez.smartadapters.sample.model;
+package io.nlopez.revamp.sample.model;
 
 /**
  * Created by mrm on 24/5/15.

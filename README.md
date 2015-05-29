@@ -8,12 +8,10 @@ Tiny MVP framework for Android.
 Adding to your project
 ----------------------
 
-**NOTE** This is still on development. Still no version available in Maven Central.
-
 Add this to your dependencies:
 
 ```groovy
-compile 'io.nlopez.revamp:library:1.0.0'
+compile 'io.nlopez.revamp:library:1.0.0-SNAPSHOT'
 ```
 
 Contributing

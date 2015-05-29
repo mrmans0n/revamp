@@ -1,4 +1,4 @@
-package io.nlopez.smartadapters.sample;
+package io.nlopez.revamp.sample;
 
 import android.app.Activity;
 import android.content.Intent;

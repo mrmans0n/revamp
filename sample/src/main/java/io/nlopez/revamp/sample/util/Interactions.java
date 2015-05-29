@@ -1,4 +1,4 @@
-package io.nlopez.smartadapters.sample.util;
+package io.nlopez.revamp.sample.util;
 
 /**
  * Created by mrm on 24/5/15.

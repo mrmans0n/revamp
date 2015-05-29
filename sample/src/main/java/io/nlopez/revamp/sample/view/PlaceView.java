@@ -1,4 +1,4 @@
-package io.nlopez.smartadapters.sample.view;
+package io.nlopez.revamp.sample.view;
 
 import android.content.Context;
 import android.text.Layout;
@@ -13,10 +13,10 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import io.nlopez.smartadapters.sample.R;
-import io.nlopez.smartadapters.sample.model.Place;
-import io.nlopez.smartadapters.sample.util.Interactions;
-import io.nlopez.smartadapters.views.BindableLayout;
+import io.nlopez.revamp.sample.R;
+import io.nlopez.revamp.sample.model.Place;
+import io.nlopez.revamp.sample.util.Interactions;
+import io.nlopez.revamp.views.BindableLayout;
 
 /**
  * Created by mrm on 24/5/15.
