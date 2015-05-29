@@ -1,5 +1,7 @@
 package revamp.base;
 
+import android.support.annotation.NonNull;
+
 import java.lang.ref.WeakReference;
 
 /**
@@ -10,12 +12,12 @@ public abstract class BasePresenter<BO extends BusinessObject, V extends ViewCom
     private WeakReference<V> weakView;
     private BO businessObject;
 
-    public BasePresenter(BO businessObject) {
+    public BasePresenter(@NonNull BO businessObject) {
         this.businessObject = businessObject;
     }
 
     @Override
-    public void takeView(V view) {
+    public void takeView(@NonNull V view) {
         weakView = new WeakReference<>(view);
     }
 
