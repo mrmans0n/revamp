@@ -2,7 +2,6 @@ package io.nlopez.revamp.sample.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,7 +14,7 @@ import butterknife.InjectView;
 import io.nlopez.revamp.sample.R;
 import io.nlopez.revamp.sample.model.User;
 import io.nlopez.revamp.sample.util.Interactions;
-import io.nlopez.revamp.views.BindableLayout;
+import io.nlopez.smartadapters.views.BindableLayout;
 
 /**
  * Created by mrm on 24/5/15.

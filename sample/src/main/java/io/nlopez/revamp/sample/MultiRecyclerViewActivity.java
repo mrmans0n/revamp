@@ -9,12 +9,12 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import io.nlopez.revamp.SmartAdapter;
 import io.nlopez.revamp.sample.model.Place;
 import io.nlopez.revamp.sample.model.User;
 import io.nlopez.revamp.sample.util.DataGenerator;
 import io.nlopez.revamp.sample.view.PlaceView;
 import io.nlopez.revamp.sample.view.UserView;
+import io.nlopez.smartadapters.SmartAdapter;
 
 public class MultiRecyclerViewActivity extends Activity {
 
