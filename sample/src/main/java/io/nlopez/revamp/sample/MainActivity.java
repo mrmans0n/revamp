@@ -1,40 +1,72 @@
 package io.nlopez.revamp.sample;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import butterknife.InjectView;
+import io.nlopez.revamp.sample.model.User;
+import io.nlopez.revamp.sample.users.UsersBO;
+import io.nlopez.revamp.sample.users.UsersPresenter;
+import io.nlopez.revamp.sample.users.UsersViewComponent;
+import io.nlopez.revamp.sample.util.Interactions;
+import io.nlopez.revamp.sample.view.UserView;
+import io.nlopez.smartadapters.SmartAdapter;
+import io.nlopez.smartadapters.utils.ViewEventListener;
+import revamp.android.PresenterActivity;
 
-public class MainActivity extends Activity {
+/**
+ * It's recommended to use the Activity / Fragment as a ViewComponent. We can handle all UI refresh
+ * and data visualization in here and we don't have to deal with sending contexts and widgets back and forth.
+ */
+public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewComponent> implements UsersViewComponent, ViewEventListener<User> {
+    @InjectView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_recyclerview);
 
         ButterKnife.inject(this);
+        initView();
+
+        // We give control to the presenter and load the data
+        presenter().loadData();
     }
 
-    @OnClick(R.id.single_listview_button)
-    void launchSingleListView() {
-        startActivity(new Intent(this, SingleListViewActivity.class));
+    private void initView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    @OnClick(R.id.single_recyclerview_button)
-    void launchSingleRecyclerView() {
-        startActivity(new Intent(this, SingleRecyclerViewActivity.class));
+    @Override
+    public UsersPresenter buildPresenter() {
+        // This only runs in onCreate.
+        // Could be interesting to save it in a variable so we don't instantiate it again.
+        return new UsersPresenter(new UsersBO());
     }
 
-    @OnClick(R.id.multi_listview_button)
-    void launchMultiListView() {
-        startActivity(new Intent(this, MultiListViewActivity.class));
+    @Override
+    public void fillListWithUsers(List<User> users) {
+        SmartAdapter.items(users).map(User.class, UserView.class).listener(this).into(recyclerView);
     }
 
-    @OnClick(R.id.multi_recyclerview_button)
-    void launchMultiRecyclerView() {
-        startActivity(new Intent(this, MultiRecyclerViewActivity.class));
+    @Override
+    public void onViewEvent(int actionId, User user, int position, View view) {
+        if (actionId == Interactions.USER_CLICKED) {
+            presenter().userSelected(user);
+        }
     }
 
+    @Override
+    public void highlightUserSelection(User user) {
+        Toast.makeText(this,
+                "User = " + user.getFirstName() + " " + user.getLastName() + " | " + user.getRole(),
+                Toast.LENGTH_LONG).show();
+    }
 }

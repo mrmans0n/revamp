@@ -14,6 +14,11 @@ Add this to your dependencies:
 compile 'io.nlopez.revamp:library:1.0.0-SNAPSHOT'
 ```
 
+Usage
+-----
+
+Please refer to the [sample](sample) for seeing it in action.
+
 Contributing
 ------------
 Forks, patches and other feedback are welcome.
