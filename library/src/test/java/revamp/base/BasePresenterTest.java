@@ -1,7 +1,5 @@
 package revamp.base;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -10,6 +8,10 @@ import org.mockito.MockitoAnnotations;
 import revamp.mocks.MockBO;
 import revamp.mocks.MockPresenter;
 import revamp.mocks.MockViewComponent;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by mrm on 4/6/15.
@@ -32,16 +34,16 @@ public class BasePresenterTest {
 
     @Test
     public void test_bo() {
-        Assert.assertEquals(mockPresenter.bo(), bo);
+        assertEquals(mockPresenter.bo(), bo);
     }
 
     @Test
     public void test_view_attachment() {
-        Assert.assertFalse(mockPresenter.isTaken());
+        assertFalse(mockPresenter.isTaken());
         mockPresenter.takeView(viewComponent);
-        Assert.assertTrue(mockPresenter.isTaken());
-        Assert.assertEquals(mockPresenter.view(), viewComponent);
+        assertTrue(mockPresenter.isTaken());
+        assertEquals(mockPresenter.view(), viewComponent);
         mockPresenter.dropView();
-        Assert.assertFalse(mockPresenter.isTaken());
+        assertFalse(mockPresenter.isTaken());
     }
 }

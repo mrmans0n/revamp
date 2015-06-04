@@ -21,7 +21,7 @@ public abstract class BasePresenter<BO extends BusinessObject, V extends ViewCom
         weakView = new WeakReference<>(view);
     }
 
-    protected boolean isTaken() {
+    public boolean isTaken() {
         return weakView != null && weakView.get() != null;
     }
 

@@ -23,6 +23,8 @@ import revamp.android.PresenterActivity;
 /**
  * It's recommended to use the Activity / Fragment as a ViewComponent. We can handle all UI refresh
  * and data visualization in here and we don't have to deal with sending contexts and widgets back and forth.
+ *
+ * It is forced by default if you use PresenterActivity or similar though.
  */
 public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewComponent> implements UsersViewComponent, ViewEventListener<User> {
     @InjectView(R.id.recycler_view)
