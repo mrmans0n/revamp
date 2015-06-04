@@ -46,8 +46,8 @@ public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewCom
 
     @Override
     public UsersPresenter buildPresenter() {
-        // This only runs in onCreate.
-        // Could be interesting to save it in a variable so we don't instantiate it again.
+        // This is cached by one of the inherited classes so you have only to think about creating
+        // a new one, and the framework will deal with reuse.
         return new UsersPresenter(new UsersBO());
     }
 
