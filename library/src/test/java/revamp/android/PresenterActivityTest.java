@@ -49,11 +49,11 @@ public class PresenterActivityTest {
         MockPresenter presenter = activity.presenter();
         Assert.assertFalse(presenter.isTaken());
 
-        controller.create().start();
+        controller.create().start().resume();
         Assert.assertTrue(presenter.isTaken());
         Assert.assertEquals(presenter.view(), activity);
 
-        controller.stop().destroy();
+        controller.pause().stop().destroy();
         Assert.assertFalse(presenter.isTaken());
     }
 

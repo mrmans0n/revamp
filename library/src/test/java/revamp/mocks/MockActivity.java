@@ -1,6 +1,7 @@
 package revamp.mocks;
 
 import android.os.Bundle;
+import android.view.View;
 
 import revamp.android.PresenterActivity;
 
@@ -10,10 +11,13 @@ import revamp.android.PresenterActivity;
 public class MockActivity extends PresenterActivity<MockPresenter, MockViewComponent> implements MockViewComponent {
 
     private MockBO mockBO;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        view = new View(this);
+        setContentView(view);
     }
 
     // This is overriden so we can inject the mock business object
