@@ -20,15 +20,6 @@ public class MockActivity extends PresenterActivity<MockPresenter, MockViewCompo
         setContentView(view);
     }
 
-    // This is overriden so we can inject the mock business object
-    @Override
-    public MockPresenter presenter() {
-        if (mockBO != null) {
-            presenter = new MockPresenter(mockBO);
-        }
-        return super.presenter();
-    }
-
     public void setBusinessObject(MockBO bo) {
         this.mockBO = bo;
     }

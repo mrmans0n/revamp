@@ -41,7 +41,6 @@ public class PresenterActivityTest {
     }
 
     @Test
-    @Ignore("TODO fix the WeakReference being gced in the assertTrue")
     public void test_activity_view_attachment() {
         ActivityController<MockActivity> controller = createMockActivity();
         MockActivity activity = controller.get();
