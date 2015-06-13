@@ -3,8 +3,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
-        classpath 'org.robolectric:robolectric-gradle-plugin:1.0.1'
+        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'org.robolectric:robolectric-gradle-plugin:1.1.0'
     }
 }
 
@@ -15,12 +15,8 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 
-version '1.0.0'
+version '1.0.1-SNAPSHOT'
 group 'io.nlopez.revamp'
-
-robolectric {
-    include '**/*Test.class'
-}
 
 dependencies {
     repositories {
@@ -31,18 +27,18 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:support-annotations:22.2.0'
     testCompile 'junit:junit:4.12'
-    testCompile 'org.robolectric:robolectric:3.0-SNAPSHOT'
-    testCompile 'org.robolectric:robolectric-shadows:3.0-SNAPSHOT'
+    testCompile 'org.robolectric:robolectric:3.0-rc3'
+    testCompile 'org.robolectric:robolectric-shadows:3.0-rc3'
     testCompile 'org.mockito:mockito-core:1.9.5'
 }
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '21.1.2'
+    compileSdkVersion 21
+    buildToolsVersion '22.0.1'
 
     defaultConfig {
         minSdkVersion 11
-        targetSdkVersion 22
+        targetSdkVersion 21
         versionCode 20005
         versionName version
     }
