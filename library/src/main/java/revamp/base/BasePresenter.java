@@ -2,14 +2,12 @@ package revamp.base;
 
 import android.support.annotation.NonNull;
 
-import java.lang.ref.WeakReference;
-
 /**
  * Provides basic functionality for all presenters.
  */
 public abstract class BasePresenter<BO extends BusinessObject, V extends ViewComponent> implements Presenter<V> {
 
-    private WeakReference<V> weakView;
+    private V viewComponent;
     private BO businessObject;
 
     public BasePresenter(@NonNull BO businessObject) {
@@ -18,15 +16,15 @@ public abstract class BasePresenter<BO extends BusinessObject, V extends ViewCom
 
     @Override
     public void takeView(@NonNull V view) {
-        weakView = new WeakReference<>(view);
+        this.viewComponent = view;
     }
 
     public boolean isTaken() {
-        return weakView != null && weakView.get() != null;
+        return viewComponent != null;
     }
 
     protected V view() {
-        return weakView.get();
+        return viewComponent;
     }
 
     protected BO bo() {
@@ -36,8 +34,7 @@ public abstract class BasePresenter<BO extends BusinessObject, V extends ViewCom
     @Override
     public void dropView() {
         if (isTaken()) {
-            weakView.clear();
-            weakView = null;
+            viewComponent = null;
         }
     }
 }
