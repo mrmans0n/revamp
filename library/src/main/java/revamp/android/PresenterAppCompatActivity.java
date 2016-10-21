@@ -7,15 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import revamp.android.delegates.PresenterActivityDelegate;
 import revamp.android.delegates.PresenterDelegateCallback;
 import revamp.base.Presenter;
+import revamp.base.PresenterFactory;
 import revamp.base.ViewComponent;
 
 /**
  * Created by mrm on 27/5/15.
  */
-public abstract class PresenterAppCompatActivity<P extends Presenter<V>, V extends ViewComponent> extends AppCompatActivity implements ViewComponent, PresenterDelegateCallback<V> {
+public abstract class PresenterAppCompatActivity<P extends Presenter<V>, V extends ViewComponent> extends AppCompatActivity implements ViewComponent, PresenterDelegateCallback<V>, PresenterFactory<P> {
 
-    protected P presenter;
-    protected PresenterActivityDelegate<V> delegate;
+    private P presenter;
+    private PresenterActivityDelegate<V> delegate;
 
     @Override
     @CallSuper
@@ -106,5 +107,6 @@ public abstract class PresenterAppCompatActivity<P extends Presenter<V>, V exten
         return presenter;
     }
 
+    @Override
     public abstract P buildPresenter();
 }

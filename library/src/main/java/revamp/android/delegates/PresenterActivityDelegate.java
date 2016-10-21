@@ -18,20 +18,20 @@ public class PresenterActivityDelegate<V extends ViewComponent> {
     }
 
     public void onCreate(Bundle savedInstanceState) {
-        Presenter<V> presenter = callback.presenter();
-        presenter.takeView(callback.viewComponent());
     }
 
     public void onDestroy() {
-        Presenter presenter = callback.presenter();
-        presenter.dropView();
     }
 
     public void onStart() {
+        Presenter<V> presenter = callback.presenter();
+        presenter.takeView(callback.viewComponent());
 
     }
 
     public void onStop() {
+        Presenter presenter = callback.presenter();
+        presenter.dropView();
 
     }
 

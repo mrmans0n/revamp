@@ -10,15 +10,16 @@ import android.view.View;
 import revamp.android.delegates.PresenterDelegateCallback;
 import revamp.android.delegates.PresenterFragmentDelegate;
 import revamp.base.Presenter;
+import revamp.base.PresenterFactory;
 import revamp.base.ViewComponent;
 
 /**
  * Created by mrm on 27/5/15.
  */
-public abstract class PresenterSupportFragment<P extends Presenter<V>, V extends ViewComponent> extends Fragment implements ViewComponent, PresenterDelegateCallback<V> {
+public abstract class PresenterSupportFragment<P extends Presenter<V>, V extends ViewComponent> extends Fragment implements ViewComponent, PresenterDelegateCallback<V>, PresenterFactory<P> {
 
-    protected P presenter;
-    protected PresenterFragmentDelegate<V> delegate;
+    private P presenter;
+    private PresenterFragmentDelegate<V> delegate;
 
     @Override
     @CallSuper
@@ -123,5 +124,6 @@ public abstract class PresenterSupportFragment<P extends Presenter<V>, V extends
         return presenter;
     }
 
+    @Override
     public abstract P buildPresenter();
 }
