@@ -7,34 +7,34 @@ import android.support.annotation.NonNull;
  */
 public abstract class BasePresenter<BO extends BusinessObject, V extends ViewComponent> implements Presenter<V> {
 
-    private V viewComponent;
-    private BO businessObject;
+  private V viewComponent;
+  private BO businessObject;
 
-    public BasePresenter(@NonNull BO businessObject) {
-        this.businessObject = businessObject;
-    }
+  public BasePresenter(@NonNull BO businessObject) {
+    this.businessObject = businessObject;
+  }
 
-    @Override
-    public void takeView(@NonNull V view) {
-        this.viewComponent = view;
-    }
+  @Override
+  public void takeView(@NonNull V view) {
+    this.viewComponent = view;
+  }
 
-    public boolean isTaken() {
-        return viewComponent != null;
-    }
+  public boolean isTaken() {
+    return viewComponent != null;
+  }
 
-    protected V view() {
-        return viewComponent;
-    }
+  protected V view() {
+    return viewComponent;
+  }
 
-    protected BO bo() {
-        return businessObject;
-    }
+  protected BO bo() {
+    return businessObject;
+  }
 
-    @Override
-    public void dropView() {
-        if (isTaken()) {
-            viewComponent = null;
-        }
+  @Override
+  public void dropView() {
+    if (isTaken()) {
+      viewComponent = null;
     }
+  }
 }

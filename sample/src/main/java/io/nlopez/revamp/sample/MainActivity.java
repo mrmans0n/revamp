@@ -40,7 +40,7 @@ public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewCom
         ButterKnife.inject(this);
         initView();
 
-        // We give control to the presenter and load the data
+        // We give control to the mPresenter and load the data
         presenter().loadData();
     }
 
