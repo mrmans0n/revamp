@@ -9,69 +9,64 @@ import android.view.View;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 
-/**
- * Created by mrm on 27/5/15.
- */
-public class PresenterFragmentDelegate<V extends ViewComponent> {
+public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presenter<V>> {
 
-    private PresenterDelegateCallback<V> callback;
+  private PresenterDelegateCallback<V, P> mCallback;
 
-    public PresenterFragmentDelegate(@NonNull PresenterDelegateCallback<V> callback) {
-        this.callback = callback;
-    }
+  public PresenterFragmentDelegate(@NonNull PresenterDelegateCallback<V, P> callback) {
+    mCallback = callback;
+  }
 
 
-    public void onCreate(Bundle savedInstanceState) {
-        Presenter<V> presenter = callback.presenter();
-        presenter.takeView(callback.viewComponent());
-    }
+  public void onCreate(Bundle savedInstanceState) {
+    Presenter<V> presenter = mCallback.presenter();
+    presenter.takeView(mCallback.viewComponent());
+  }
 
-    public void onDestroy() {
-        Presenter presenter = callback.presenter();
-        presenter.dropView();
-    }
+  public void onDestroy() {
+    Presenter presenter = mCallback.presenter();
+    presenter.dropView();
+  }
 
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-    }
+  }
 
-    public void onDestroyView() {
+  public void onDestroyView() {
 
-    }
+  }
 
-    public void onActivityCreated(Bundle savedInstanceState) {
+  public void onActivityCreated(Bundle savedInstanceState) {
 
-    }
+  }
 
-    public void onAttach(Activity activity) {
+  public void onAttach(Activity activity) {
 
-    }
+  }
 
-    public void onDetach() {
+  public void onDetach() {
 
-    }
+  }
 
-    public void onStart() {
+  public void onStart() {
 
-    }
+  }
 
-    public void onStop() {
+  public void onStop() {
 
-    }
+  }
 
-    public void onResume() {
+  public void onResume() {
 
-    }
+  }
 
-    public void onPause() {
+  public void onPause() {
 
-    }
+  }
 
-    public void onSaveInstanceState(Bundle outState) {
+  public void onSaveInstanceState(Bundle outState) {
 
-    }
-
-
+  }
 }
 
 

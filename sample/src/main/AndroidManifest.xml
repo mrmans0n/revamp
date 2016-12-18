@@ -17,8 +17,7 @@
 
         <activity
             android:name="io.nlopez.revamp.sample.MainActivity"
-            android:label="Revamp Sample"
-            android:screenOrientation="portrait">
+            android:label="Revamp Sample">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

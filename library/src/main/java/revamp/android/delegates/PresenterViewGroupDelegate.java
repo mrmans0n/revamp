@@ -5,28 +5,23 @@ import android.support.annotation.NonNull;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 
-/**
- * Created by mrm on 27/5/15.
- */
-public class PresenterViewGroupDelegate<V extends ViewComponent> {
+public class PresenterViewGroupDelegate<V extends ViewComponent, P extends Presenter<V>> {
 
-    private PresenterDelegateCallback<V> callback;
+  private PresenterDelegateCallback<V, P> mCallback;
 
-    public PresenterViewGroupDelegate(@NonNull PresenterDelegateCallback<V> callback) {
-        this.callback = callback;
-    }
+  public PresenterViewGroupDelegate(@NonNull PresenterDelegateCallback<V, P> callback) {
+    this.mCallback = callback;
+  }
 
+  public void onAttachedToWindow() {
+    Presenter<V> presenter = mCallback.presenter();
+    presenter.takeView(mCallback.viewComponent());
+  }
 
-    public void onAttachedToWindow() {
-        Presenter<V> presenter = callback.presenter();
-        presenter.takeView(callback.viewComponent());
-    }
-
-    public void onDetachedFromWindow() {
-        Presenter presenter = callback.presenter();
-        presenter.dropView();
-    }
-
+  public void onDetachedFromWindow() {
+    Presenter presenter = mCallback.presenter();
+    presenter.dropView();
+  }
 }
 
 

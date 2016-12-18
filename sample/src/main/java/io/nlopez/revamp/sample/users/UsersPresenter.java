@@ -22,7 +22,7 @@ public class UsersPresenter extends BasePresenter<UsersBO, UsersViewComponent> {
 
     public void userSelected(User user) {
         // This is responsibility for the BO as we deal with persistence / network / whatever
-        // so this kind of code doesn't belong to the presenter
+        // so this kind of code doesn't belong to the mPresenter
         bo().storeUser(user);
 
         // We deal with what to do after storing -- now it's showing some feedback to the user.
