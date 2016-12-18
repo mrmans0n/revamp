@@ -1,8 +1,6 @@
 package revamp.android;
 
-public interface RetainableStore {
-
-  boolean shouldRetain();
+public interface RetainableStore extends Retainable {
 
   void retainObject(String objectId, Object object);
 

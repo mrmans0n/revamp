@@ -7,12 +7,12 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import revamp.android.delegates.PresenterDelegateCallback;
 import revamp.android.delegates.PresenterFragmentDelegate;
+import revamp.android.delegates.PresenterFragmentDelegateCallback;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 
-public abstract class PresenterFragment<P extends Presenter<V>, V extends ViewComponent> extends Fragment implements ViewComponent, PresenterDelegateCallback<V, P> {
+public abstract class PresenterFragment<P extends Presenter<V>, V extends ViewComponent> extends Fragment implements ViewComponent, PresenterFragmentDelegateCallback<V, P> {
 
   protected P mPresenter;
   protected PresenterFragmentDelegate<V, P> mDelegate;
@@ -101,9 +101,14 @@ public abstract class PresenterFragment<P extends Presenter<V>, V extends ViewCo
     getPresenterDelegate().onSaveInstanceState(outState);
   }
 
+  @Override
+  public boolean shouldRetain() {
+    return true;
+  }
+
   private PresenterFragmentDelegate<V, P> getPresenterDelegate() {
     if (mDelegate == null) {
-      mDelegate = new PresenterFragmentDelegate<>(this);
+      mDelegate = new PresenterFragmentDelegate<>(this, getActivity());
     }
     return mDelegate;
   }
