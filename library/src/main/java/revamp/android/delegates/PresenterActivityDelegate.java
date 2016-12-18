@@ -14,9 +14,9 @@ public class PresenterActivityDelegate<V extends ViewComponent, P extends Presen
 
   private static final String PRESENTER_ID = "stored_presenter";
   private final Map<String, Object> mRetainedObjects;
-  private final PresenterDelegateCallback<V, P> mCallback;
+  private final PresenterActivityDelegateCallback<V, P> mCallback;
 
-  public PresenterActivityDelegate(@NonNull PresenterDelegateCallback<V, P> callback, Object lastNonConfigurationInstance) {
+  public PresenterActivityDelegate(@NonNull PresenterActivityDelegateCallback<V, P> callback, Object lastNonConfigurationInstance) {
     mCallback = callback;
     if (lastNonConfigurationInstance != null) {
       mRetainedObjects = (Map<String, Object>) lastNonConfigurationInstance;
@@ -69,8 +69,16 @@ public class PresenterActivityDelegate<V extends ViewComponent, P extends Presen
   }
 
   public Object onRetainCustomNonConfigurationInstance() {
+    if (!mCallback.shouldRetain()) {
+      return null;
+    }
     mRetainedObjects.put(PRESENTER_ID, mCallback.presenter());
     return mRetainedObjects;
+  }
+
+  @Override
+  public boolean shouldRetain() {
+    return mCallback.shouldRetain();
   }
 
   @Override

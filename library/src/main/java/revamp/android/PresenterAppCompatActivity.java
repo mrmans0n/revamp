@@ -6,11 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import revamp.android.delegates.PresenterActivityDelegate;
 import revamp.android.delegates.PresenterActivityDelegateCallback;
-import revamp.android.delegates.PresenterDelegateCallback;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 
-public abstract class PresenterAppCompatActivity<P extends Presenter<V>, V extends ViewComponent> extends AppCompatActivity implements ViewComponent, PresenterDelegateCallback<V, P>, PresenterActivityDelegateCallback {
+public abstract class PresenterAppCompatActivity<P extends Presenter<V>, V extends ViewComponent> extends AppCompatActivity implements ViewComponent, PresenterActivityDelegateCallback<V, P> {
 
   protected P mPresenter;
   protected PresenterActivityDelegate<V, P> mDelegate;
@@ -101,7 +100,7 @@ public abstract class PresenterAppCompatActivity<P extends Presenter<V>, V exten
   }
 
   @Override
-  public boolean isRetained() {
+  public boolean shouldRetain() {
     return true;
   }
 
