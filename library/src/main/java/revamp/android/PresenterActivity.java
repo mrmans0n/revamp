@@ -12,10 +12,10 @@ import revamp.base.ViewComponent;
 /**
  * Created by mrm on 27/5/15.
  */
-public abstract class PresenterActivity<P extends Presenter<V>, V extends ViewComponent> extends Activity implements ViewComponent, PresenterDelegateCallback<V> {
+public abstract class PresenterActivity<P extends Presenter<V>, V extends ViewComponent> extends Activity implements ViewComponent, PresenterDelegateCallback<V, P>, CanRetainObjects {
 
     protected P presenter;
-    protected PresenterActivityDelegate<V> delegate;
+    protected PresenterActivityDelegate<V, P> delegate;
 
     @Override
     @CallSuper
@@ -87,9 +87,24 @@ public abstract class PresenterActivity<P extends Presenter<V>, V extends ViewCo
         getPresenterDelegate().onPostCreate(savedInstanceState);
     }
 
-    private PresenterActivityDelegate<V> getPresenterDelegate() {
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+        return getPresenterDelegate().onRetainCustomNonConfigurationInstance();
+    }
+
+    @Override
+    public void retainObject(String objectId, Object object) {
+        getPresenterDelegate().retainObject(objectId, object);
+    }
+
+    @Override
+    public Object restoreRetained(String objectId) {
+        return getPresenterDelegate().restoreRetained(objectId);
+    }
+
+    private PresenterActivityDelegate<V, P> getPresenterDelegate() {
         if (delegate == null) {
-            delegate = new PresenterActivityDelegate<>(this);
+            delegate = new PresenterActivityDelegate<>(this, getLastNonConfigurationInstance());
         }
         return delegate;
     }
@@ -104,6 +119,11 @@ public abstract class PresenterActivity<P extends Presenter<V>, V extends ViewCo
             presenter = buildPresenter();
         }
         return presenter;
+    }
+
+    @Override
+    public void setPresenter(P presenter) {
+        this.presenter = presenter;
     }
 
     public abstract P buildPresenter();

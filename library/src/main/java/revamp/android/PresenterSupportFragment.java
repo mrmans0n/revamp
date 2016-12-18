@@ -15,10 +15,10 @@ import revamp.base.ViewComponent;
 /**
  * Created by mrm on 27/5/15.
  */
-public abstract class PresenterSupportFragment<P extends Presenter<V>, V extends ViewComponent> extends Fragment implements ViewComponent, PresenterDelegateCallback<V> {
+public abstract class PresenterSupportFragment<P extends Presenter<V>, V extends ViewComponent> extends Fragment implements ViewComponent, PresenterDelegateCallback<V, P> {
 
     protected P presenter;
-    protected PresenterFragmentDelegate<V> delegate;
+    protected PresenterFragmentDelegate<V, P> delegate;
 
     @Override
     @CallSuper
@@ -104,7 +104,7 @@ public abstract class PresenterSupportFragment<P extends Presenter<V>, V extends
         getPresenterDelegate().onSaveInstanceState(outState);
     }
 
-    private PresenterFragmentDelegate<V> getPresenterDelegate() {
+    private PresenterFragmentDelegate<V, P> getPresenterDelegate() {
         if (delegate == null) {
             delegate = new PresenterFragmentDelegate<>(this);
         }
@@ -116,11 +116,17 @@ public abstract class PresenterSupportFragment<P extends Presenter<V>, V extends
         return (V) this;
     }
 
+    @Override
     public P presenter() {
         if (presenter == null) {
             presenter = buildPresenter();
         }
         return presenter;
+    }
+
+    @Override
+    public void setPresenter(P presenter) {
+        this.presenter = presenter;
     }
 
     public abstract P buildPresenter();

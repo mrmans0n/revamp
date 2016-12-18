@@ -8,11 +8,11 @@ import revamp.base.ViewComponent;
 /**
  * Created by mrm on 27/5/15.
  */
-public class PresenterViewGroupDelegate<V extends ViewComponent> {
+public class PresenterViewGroupDelegate<V extends ViewComponent, P extends Presenter<V>> {
 
-    private PresenterDelegateCallback<V> callback;
+    private PresenterDelegateCallback<V, P> callback;
 
-    public PresenterViewGroupDelegate(@NonNull PresenterDelegateCallback<V> callback) {
+    public PresenterViewGroupDelegate(@NonNull PresenterDelegateCallback<V, P> callback) {
         this.callback = callback;
     }
 
