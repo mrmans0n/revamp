@@ -1,9 +1,7 @@
 package io.nlopez.revamp.sample.view;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,49 +12,48 @@ import butterknife.InjectView;
 import io.nlopez.revamp.sample.R;
 import io.nlopez.revamp.sample.model.Place;
 import io.nlopez.revamp.sample.util.Interactions;
-import io.nlopez.smartadapters.views.BindableLayout;
+import io.nlopez.smartadapters.views.BindableLinearLayout;
 
 /**
  * Created by mrm on 24/5/15.
  */
-public class PlaceView extends BindableLayout<Place> {
+public class PlaceView extends BindableLinearLayout<Place> {
 
-    @InjectView(R.id.place_image)
-    ImageView placeImage;
+  @InjectView(R.id.place_image)
+  ImageView placeImage;
 
-    @InjectView(R.id.place_text)
-    TextView placeText;
+  @InjectView(R.id.place_text)
+  TextView placeText;
 
-    public PlaceView(Context context) {
-        super(context);
-        initView(context);
-    }
+  public PlaceView(Context context) {
+    super(context);
+  }
 
-    public PlaceView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context);
-    }
+  @Override
+  public int getOrientation() {
+    return HORIZONTAL;
+  }
 
-    public PlaceView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initView(context);
-    }
+  @Override
+  public int getLayoutId() {
+    return R.layout.view_place;
+  }
 
-    public void initView(Context context) {
-        inflate(context, R.layout.view_place, (ViewGroup) getRootView());
-        ButterKnife.inject(this);
-    }
+  @Override
+  public void onViewInflated() {
+    ButterKnife.inject(this);
+  }
 
-    @Override
-    public void bind(Place item) {
-        placeText.setText(item.getName());
-        Picasso.with(getContext()).load(item.getImageUrl()).into(placeImage);
+  @Override
+  public void bind(Place item) {
+    placeText.setText(item.getName());
+    Picasso.with(getContext()).load(item.getImageUrl()).into(placeImage);
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notifyItemAction(Interactions.PLACE_CLICKED);
-            }
-        });
-    }
+    setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        notifyItemAction(Interactions.PLACE_CLICKED);
+      }
+    });
+  }
 }

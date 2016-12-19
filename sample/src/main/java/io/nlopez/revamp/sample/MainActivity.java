@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -29,48 +28,49 @@ import revamp.android.PresenterActivity;
  * Just do it as it is portrated in PresenterActivity for example.
  */
 public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewComponent> implements UsersViewComponent, ViewEventListener<User> {
-    @InjectView(R.id.recycler_view)
-    RecyclerView recyclerView;
+  @InjectView(R.id.recycler_view)
+  RecyclerView recyclerView;
 
-    @Override
-    public void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
-        setContentView(R.layout.activity_recyclerview);
+  @Override
+  public void onCreate(Bundle bundle) {
+    super.onCreate(bundle);
+    setContentView(R.layout.activity_recyclerview);
 
-        ButterKnife.inject(this);
-        initView();
+    ButterKnife.inject(this);
+    initView();
 
-        // We give control to the mPresenter and load the data
-        presenter().loadData();
+    // We give control to the mPresenter and load the data
+    presenter().loadData();
+  }
+
+  private void initView() {
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+  }
+
+  @Override
+  public UsersPresenter buildPresenter() {
+    // This is cached by one of the inherited classes so you have only to think about creating
+    // a new one, and the framework will deal with reuse.
+    return new UsersPresenter(new UsersBO());
+  }
+
+  @Override
+  public void fillListWithUsers(List<User> users) {
+    SmartAdapter.items(users)
+            .map(User.class, UserView.class)
+            .listener(this)
+            .into(recyclerView);
+  }
+
+  @Override
+  public void onViewEvent(int actionId, User user, int position, View view) {
+    if (actionId == Interactions.USER_CLICKED) {
+      presenter().userSelected(user);
     }
+  }
 
-    private void initView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @Override
-    public UsersPresenter buildPresenter() {
-        // This is cached by one of the inherited classes so you have only to think about creating
-        // a new one, and the framework will deal with reuse.
-        return new UsersPresenter(new UsersBO());
-    }
-
-    @Override
-    public void fillListWithUsers(List<User> users) {
-        SmartAdapter.items(users).map(User.class, UserView.class).listener(this).into(recyclerView);
-    }
-
-    @Override
-    public void onViewEvent(int actionId, User user, int position, View view) {
-        if (actionId == Interactions.USER_CLICKED) {
-            presenter().userSelected(user);
-        }
-    }
-
-    @Override
-    public void highlightUserSelection(User user) {
-        Toast.makeText(this,
-                "User = " + user.getFirstName() + " " + user.getLastName() + " | " + user.getRole(),
-                Toast.LENGTH_LONG).show();
-    }
+  @Override
+  public void highlightUserSelection(User user) {
+    startActivity(PlacesActivity.createIntent(this));
+  }
 }
