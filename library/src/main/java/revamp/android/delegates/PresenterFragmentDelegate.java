@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.SparseArrayCompat;
 import android.view.View;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import revamp.base.Presenter;
@@ -16,47 +17,85 @@ import revamp.base.ViewComponent;
 
 public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presenter<V>> {
   private static final String FRAGMENT_TAG = "revamp_fragment";
+  private static final String STORE_ID = "revamp_store_id";
   private PresenterFragmentDelegateCallback<V, P> mCallback;
-  private PresenterStore mPresenterStore;
+  private WeakReference<Activity> mActivityRef;
+  private int mStoreId;
 
-  public PresenterFragmentDelegate(@NonNull PresenterFragmentDelegateCallback<V, P> callback, int storeId, @NonNull Activity activity) {
+  public PresenterFragmentDelegate(@NonNull PresenterFragmentDelegateCallback<V, P> callback, @NonNull Activity activity) {
     mCallback = callback;
-    retrievePresenterIfExisting(storeId, activity);
+    mActivityRef = new WeakReference<>(activity);
   }
 
-  private void retrievePresenterIfExisting(int storeId, Activity activity) {
-    HasPresenterStore fragmentStore;
-    if (activity instanceof FragmentActivity) {
-      FragmentActivity fragmentActivity = (FragmentActivity) activity;
-      fragmentStore = (HasPresenterStore) fragmentActivity.getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-    } else {
-      fragmentStore = (HasPresenterStore) activity.getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-    }
-
+  private PresenterStore getStore() {
+    PresenterStoreFragment fragmentStore = getStoreContainer();
     if (fragmentStore == null) {
-      fragmentStore = createHeadlessFragment(activity);
+      fragmentStore = createStoreContainer();
     }
-    PresenterStore store = fragmentStore.store();
-
-    Presenter presenter = store.get(storeId);
-    if (presenter != null) {
-      mCallback.setPresenter((P) presenter);
-    }
+    return fragmentStore.store();
   }
 
-  private HasPresenterStore createHeadlessFragment(Activity activity) {
-    return null;
+  @Nullable
+  private PresenterStoreFragment getStoreContainer() {
+    if (getActivity() instanceof FragmentActivity) {
+      FragmentActivity fragmentActivity = (FragmentActivity) getActivity();
+      return (PresenterStoreFragment) fragmentActivity.getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+    }
+    return (PresenterStoreFragment) getActivity().getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
   }
 
+  @NonNull
+  private PresenterStoreFragment createStoreContainer() {
+    if (getActivity() instanceof FragmentActivity) {
+      // FragmentActivity => support fragment
+      final FragmentActivity fragmentActivity = (FragmentActivity) getActivity();
+      final RetainedSupportFragment fragment = new RetainedSupportFragment();
+      fragmentActivity.getSupportFragmentManager()
+              .beginTransaction()
+              .add(fragment, FRAGMENT_TAG)
+              .commit();
+      return fragment;
+    }
+    // Normal activity => normal fragment
+    final RetainedFragment fragment = new RetainedFragment();
+    getActivity().getFragmentManager()
+            .beginTransaction()
+            .add(fragment, FRAGMENT_TAG)
+            .commit();
+    return fragment;
+  }
+
+  @NonNull
+  private Activity getActivity() {
+    if (mActivityRef == null || mActivityRef.get() == null) {
+      throw new RuntimeException("Activity was null or not present");
+    }
+    return mActivityRef.get();
+  }
 
   public void onCreate(Bundle savedInstanceState) {
-    Presenter<V> presenter = mCallback.presenter();
+    P presenter;
+    if (savedInstanceState != null && savedInstanceState.containsKey(STORE_ID)) {
+      // If there is a stored presenter, we use it and let the callback know we are doing it
+      mStoreId = savedInstanceState.getInt(STORE_ID);
+      presenter = (P) getStore().get(mStoreId);
+      if (presenter == null) {
+        throw new RuntimeException("Presenter is null in store but there is a storeId so it should not");
+      }
+      mCallback.setPresenter(presenter);
+    } else {
+      // If there is no stored info or presenter, we create a new cache and store it
+      mStoreId = getStore().generateId();
+      presenter = mCallback.presenter();
+      getStore().put(mStoreId, presenter);
+    }
     presenter.takeView(mCallback.viewComponent());
   }
 
   public void onDestroy() {
-    Presenter presenter = mCallback.presenter();
-    presenter.dropView();
+    mCallback.presenter().dropView();
+    mActivityRef.clear();
+    mActivityRef = null;
   }
 
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -96,7 +135,7 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
   }
 
   public void onSaveInstanceState(Bundle outState) {
-
+    outState.putInt(STORE_ID, mStoreId);
   }
 
   /**
@@ -107,37 +146,46 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
     private SparseArrayCompat<Presenter> mRetainedObjects = new SparseArrayCompat<>();
 
 
-    public void put(int key, Presenter presenter) {
+    void put(int key, Presenter presenter) {
       mRetainedObjects.put(key, presenter);
     }
 
-    public Presenter get(int key) {
+    Presenter get(int key) {
       return mRetainedObjects.get(key);
     }
 
-    public int generateId() {
+    int generateId() {
       return sCount.incrementAndGet();
     }
 
-    public void release() {
+    void release() {
       mRetainedObjects.clear();
       mRetainedObjects = null;
     }
   }
 
-  private interface HasPresenterStore {
+  /**
+   * Contains a presenter store
+   */
+  private interface PresenterStoreFragment {
     PresenterStore store();
   }
 
   /**
    * Headless fragment for handling our cache
    */
-  public static final class RetainedFragment extends android.app.Fragment implements HasPresenterStore {
+  public static final class RetainedFragment extends android.app.Fragment implements PresenterStoreFragment {
 
     private final PresenterStore mStore;
 
     public RetainedFragment() {
       mStore = new PresenterStore();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setRetainInstance(true);
     }
 
     @Override
@@ -155,7 +203,7 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
   /**
    * Headless support fragment handling our cache
    */
-  public static final class RetainedSupportFragment extends Fragment implements HasPresenterStore {
+  public static final class RetainedSupportFragment extends Fragment implements PresenterStoreFragment {
 
     private final PresenterStore mStore;
 
