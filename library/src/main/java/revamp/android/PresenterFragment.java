@@ -106,6 +106,16 @@ public abstract class PresenterFragment<P extends Presenter<V>, V extends ViewCo
     return true;
   }
 
+  @Override
+  public void retainObject(String objectId, Object object) {
+    mDelegate.retainObject(objectId, object);
+  }
+
+  @Override
+  public Object restoreRetained(String objectId) {
+    return mDelegate.restoreRetained(objectId);
+  }
+
   private PresenterFragmentDelegate<V, P> getPresenterDelegate() {
     if (mDelegate == null) {
       mDelegate = new PresenterFragmentDelegate<>(this, getActivity());

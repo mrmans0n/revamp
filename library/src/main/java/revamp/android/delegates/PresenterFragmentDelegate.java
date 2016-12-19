@@ -12,10 +12,12 @@ import android.view.View;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import revamp.android.store.RetainableStore;
+import revamp.android.store.RetainableStoreImpl;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 
-public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presenter<V>> {
+public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presenter<V>> implements RetainableStore {
   private static final String FRAGMENT_TAG = "revamp_fragment";
   private static final String STORE_ID = "revamp_store_id";
   private PresenterFragmentDelegateCallback<V, P> mCallback;
@@ -27,55 +29,11 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
     mActivityRef = new WeakReference<>(activity);
   }
 
-  private PresenterStore getStore() {
-    PresenterStoreFragment fragmentStore = getStoreContainer();
-    if (fragmentStore == null) {
-      fragmentStore = createStoreContainer();
-    }
-    return fragmentStore.store();
-  }
-
-  @Nullable
-  private PresenterStoreFragment getStoreContainer() {
-    if (getActivity() instanceof FragmentActivity) {
-      FragmentActivity fragmentActivity = (FragmentActivity) getActivity();
-      return (PresenterStoreFragment) fragmentActivity.getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-    }
-    return (PresenterStoreFragment) getActivity().getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-  }
-
-  @NonNull
-  private PresenterStoreFragment createStoreContainer() {
-    if (getActivity() instanceof FragmentActivity) {
-      // FragmentActivity => support fragment
-      final FragmentActivity fragmentActivity = (FragmentActivity) getActivity();
-      final RetainedSupportFragment fragment = new RetainedSupportFragment();
-      fragmentActivity.getSupportFragmentManager()
-              .beginTransaction()
-              .add(fragment, FRAGMENT_TAG)
-              .commit();
-      return fragment;
-    }
-    // Normal activity => normal fragment
-    final RetainedFragment fragment = new RetainedFragment();
-    getActivity().getFragmentManager()
-            .beginTransaction()
-            .add(fragment, FRAGMENT_TAG)
-            .commit();
-    return fragment;
-  }
-
-  @NonNull
-  private Activity getActivity() {
-    if (mActivityRef == null || mActivityRef.get() == null) {
-      throw new RuntimeException("Activity was null or not present");
-    }
-    return mActivityRef.get();
-  }
-
   public void onCreate(Bundle savedInstanceState) {
     P presenter;
-    if (savedInstanceState != null && savedInstanceState.containsKey(STORE_ID)) {
+    if (!mCallback.shouldRetain()) {
+      presenter = mCallback.presenter();
+    } else if (savedInstanceState != null && savedInstanceState.containsKey(STORE_ID)) {
       // If there is a stored presenter, we use it and let the callback know we are doing it
       mStoreId = savedInstanceState.getInt(STORE_ID);
       presenter = (P) getStore().get(mStoreId);
@@ -138,6 +96,70 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
     outState.putInt(STORE_ID, mStoreId);
   }
 
+  @Nullable
+  private PresenterStoreFragment getStoreContainer() {
+    if (getActivity() instanceof FragmentActivity) {
+      FragmentActivity fragmentActivity = (FragmentActivity) getActivity();
+      return (PresenterStoreFragment) fragmentActivity.getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+    }
+    return (PresenterStoreFragment) getActivity().getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+  }
+
+  @NonNull
+  private PresenterStoreFragment createStoreContainer() {
+    if (getActivity() instanceof FragmentActivity) {
+      // FragmentActivity => support fragment
+      final FragmentActivity fragmentActivity = (FragmentActivity) getActivity();
+      final RetainedSupportFragment fragment = new RetainedSupportFragment();
+      fragmentActivity.getSupportFragmentManager()
+              .beginTransaction()
+              .add(fragment, FRAGMENT_TAG)
+              .commit();
+      return fragment;
+    }
+    // Normal activity => normal fragment
+    final RetainedFragment fragment = new RetainedFragment();
+    getActivity().getFragmentManager()
+            .beginTransaction()
+            .add(fragment, FRAGMENT_TAG)
+            .commit();
+    return fragment;
+  }
+
+  private PresenterStoreFragment getStoreFragment() {
+    PresenterStoreFragment fragmentStore = getStoreContainer();
+    if (fragmentStore == null) {
+      fragmentStore = createStoreContainer();
+    }
+    return fragmentStore;
+  }
+
+  private PresenterStore getStore() {
+    return getStoreFragment().store();
+  }
+
+  private RetainableStore getRetainable() {
+    return getStoreFragment().retainable();
+  }
+
+  @NonNull
+  private Activity getActivity() {
+    if (mActivityRef == null || mActivityRef.get() == null) {
+      throw new RuntimeException("Activity was null or not present");
+    }
+    return mActivityRef.get();
+  }
+
+  @Override
+  public void retainObject(String objectId, Object object) {
+    getRetainable().retainObject(objectId, object);
+  }
+
+  @Override
+  public Object restoreRetained(String objectId) {
+    return getRetainable().restoreRetained(objectId);
+  }
+
   /**
    * Common structure for holding presenters and generating their ids
    */
@@ -168,6 +190,8 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
    */
   private interface PresenterStoreFragment {
     PresenterStore store();
+
+    RetainableStore retainable();
   }
 
   /**
@@ -176,9 +200,11 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
   public static final class RetainedFragment extends android.app.Fragment implements PresenterStoreFragment {
 
     private final PresenterStore mStore;
+    private final RetainableStoreImpl mRetainable;
 
     public RetainedFragment() {
       mStore = new PresenterStore();
+      mRetainable = new RetainableStoreImpl();
     }
 
     @Override
@@ -197,6 +223,11 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
     public PresenterStore store() {
       return mStore;
     }
+
+    @Override
+    public RetainableStore retainable() {
+      return mRetainable;
+    }
   }
 
   /**
@@ -205,9 +236,11 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
   public static final class RetainedSupportFragment extends Fragment implements PresenterStoreFragment {
 
     private final PresenterStore mStore;
+    private final RetainableStoreImpl mRetainable;
 
     public RetainedSupportFragment() {
       mStore = new PresenterStore();
+      mRetainable = new RetainableStoreImpl();
     }
 
     @Override
@@ -225,6 +258,11 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
     @Override
     public PresenterStore store() {
       return mStore;
+    }
+
+    @Override
+    public RetainableStore retainable() {
+      return mRetainable;
     }
   }
 }

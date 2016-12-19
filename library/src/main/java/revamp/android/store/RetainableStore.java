@@ -1,6 +1,6 @@
-package revamp.android;
+package revamp.android.store;
 
-public interface RetainableStore extends Retainable {
+public interface RetainableStore {
 
   void retainObject(String objectId, Object object);
 

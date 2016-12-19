@@ -2,27 +2,25 @@ package revamp.android.delegates;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.util.ArrayMap;
 
-import java.util.Map;
-
-import revamp.android.RetainableStore;
+import revamp.android.store.RetainableStore;
+import revamp.android.store.RetainableStoreImpl;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 
 public class PresenterActivityDelegate<V extends ViewComponent, P extends Presenter<V>> implements RetainableStore {
 
   private static final String PRESENTER_ID = "stored_presenter";
-  private final Map<String, Object> mRetainedObjects;
+  private final RetainableStore mRetainableStore;
   private final PresenterActivityDelegateCallback<V, P> mCallback;
 
   public PresenterActivityDelegate(@NonNull PresenterActivityDelegateCallback<V, P> callback, Object lastNonConfigurationInstance) {
     mCallback = callback;
     if (lastNonConfigurationInstance != null) {
-      mRetainedObjects = (Map<String, Object>) lastNonConfigurationInstance;
-      callback.setPresenter((P) mRetainedObjects.get(PRESENTER_ID));
+      mRetainableStore = (RetainableStore) lastNonConfigurationInstance;
+      callback.setPresenter((P) mRetainableStore.restoreRetained(PRESENTER_ID));
     } else {
-      mRetainedObjects = new ArrayMap<>();
+      mRetainableStore = new RetainableStoreImpl();
     }
   }
 
@@ -72,23 +70,18 @@ public class PresenterActivityDelegate<V extends ViewComponent, P extends Presen
     if (!mCallback.shouldRetain()) {
       return null;
     }
-    mRetainedObjects.put(PRESENTER_ID, mCallback.presenter());
-    return mRetainedObjects;
-  }
-
-  @Override
-  public boolean shouldRetain() {
-    return mCallback.shouldRetain();
+    mRetainableStore.retainObject(PRESENTER_ID, mCallback.presenter());
+    return mRetainableStore;
   }
 
   @Override
   public void retainObject(String objectId, Object object) {
-    mRetainedObjects.put(objectId, object);
+    mRetainableStore.retainObject(objectId, object);
   }
 
   @Override
   public Object restoreRetained(String objectId) {
-    return mRetainedObjects.get(objectId);
+    return mRetainableStore.restoreRetained(objectId);
   }
 }
 

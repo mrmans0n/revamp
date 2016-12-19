@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import revamp.android.delegates.PresenterDelegateCallback;
 import revamp.android.delegates.PresenterFragmentDelegate;
 import revamp.android.delegates.PresenterFragmentDelegateCallback;
 import revamp.base.Presenter;
@@ -105,6 +104,16 @@ public abstract class PresenterSupportFragment<P extends Presenter<V>, V extends
   @Override
   public boolean shouldRetain() {
     return true;
+  }
+
+  @Override
+  public void retainObject(String objectId, Object object) {
+    mDelegate.retainObject(objectId, object);
+  }
+
+  @Override
+  public Object restoreRetained(String objectId) {
+    return mDelegate.restoreRetained(objectId);
   }
 
   private PresenterFragmentDelegate<V, P> getPresenterDelegate() {
