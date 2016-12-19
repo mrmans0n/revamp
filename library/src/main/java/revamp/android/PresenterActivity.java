@@ -3,13 +3,15 @@ package revamp.android;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 
 import revamp.android.delegates.PresenterActivityDelegate;
 import revamp.android.delegates.PresenterActivityDelegateCallback;
+import revamp.android.store.RetainableStore;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 
-public abstract class PresenterActivity<P extends Presenter<V>, V extends ViewComponent> extends Activity implements ViewComponent, PresenterActivityDelegateCallback<V, P> {
+public abstract class PresenterActivity<P extends Presenter<V>, V extends ViewComponent> extends Activity implements ViewComponent, PresenterActivityDelegateCallback<V, P>, RetainableStore {
 
   protected P mPresenter;
   protected PresenterActivityDelegate<V, P> mDelegate;
@@ -111,11 +113,13 @@ public abstract class PresenterActivity<P extends Presenter<V>, V extends ViewCo
     return mDelegate;
   }
 
+  @NonNull
   @Override
   public V viewComponent() {
     return (V) this;
   }
 
+  @NonNull
   public P presenter() {
     if (mPresenter == null) {
       mPresenter = buildPresenter();
@@ -124,7 +128,7 @@ public abstract class PresenterActivity<P extends Presenter<V>, V extends ViewCo
   }
 
   @Override
-  public void setPresenter(P presenter) {
+  public void setRetainedPresenter(@NonNull P presenter) {
     mPresenter = presenter;
   }
 

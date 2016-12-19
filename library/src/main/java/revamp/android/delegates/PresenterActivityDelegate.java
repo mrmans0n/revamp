@@ -18,7 +18,7 @@ public class PresenterActivityDelegate<V extends ViewComponent, P extends Presen
     mCallback = callback;
     if (lastNonConfigurationInstance != null) {
       mRetainableStore = (RetainableStore) lastNonConfigurationInstance;
-      callback.setPresenter((P) mRetainableStore.restoreRetained(PRESENTER_ID));
+      callback.setRetainedPresenter((P) mRetainableStore.restoreRetained(PRESENTER_ID));
     } else {
       mRetainableStore = new RetainableStoreImpl();
     }

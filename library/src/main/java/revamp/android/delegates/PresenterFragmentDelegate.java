@@ -40,7 +40,7 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
       if (presenter == null) {
         throw new RuntimeException("Presenter is null in store but there is a storeId so it should not");
       }
-      mCallback.setPresenter(presenter);
+      mCallback.setRetainedPresenter(presenter);
     } else {
       // If there is no stored info or presenter, we create a new cache and store it
       mStoreId = getStore().generateId();

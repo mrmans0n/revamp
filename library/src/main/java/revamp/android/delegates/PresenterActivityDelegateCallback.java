@@ -5,5 +5,5 @@ import revamp.android.store.RetainableStore;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 
-public interface PresenterActivityDelegateCallback<V extends ViewComponent, P extends Presenter<V>> extends RetainableStore, Retainable, PresenterDelegateCallback<V, P> {
+public interface PresenterActivityDelegateCallback<V extends ViewComponent, P extends Presenter<V>> extends Retainable, PresenterDelegateCallback<V, P> {
 }
