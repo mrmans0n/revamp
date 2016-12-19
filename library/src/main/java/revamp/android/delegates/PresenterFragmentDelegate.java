@@ -145,7 +145,6 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
     private static AtomicInteger sCount = new AtomicInteger(0);
     private SparseArrayCompat<Presenter> mRetainedObjects = new SparseArrayCompat<>();
 
-
     void put(int key, Presenter presenter) {
       mRetainedObjects.put(key, presenter);
     }
