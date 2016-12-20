@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import revamp.android.PresenterFragment;
+import revamp.android.PresenterSupportFragment;
 
-public class TestFragment extends PresenterFragment<TestPresenter, TestViewComponent> implements TestViewComponent {
+public class TestSupportFragment extends PresenterSupportFragment<TestPresenter, TestViewComponent> implements TestViewComponent {
 
   private TestBO mockBO;
   private View view;

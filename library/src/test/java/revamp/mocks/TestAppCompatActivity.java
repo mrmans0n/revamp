@@ -3,9 +3,9 @@ package revamp.mocks;
 import android.os.Bundle;
 import android.view.View;
 
-import revamp.android.PresenterActivity;
+import revamp.android.PresenterAppCompatActivity;
 
-public class TestActivity extends PresenterActivity<TestPresenter, TestViewComponent> implements TestViewComponent {
+public class TestAppCompatActivity extends PresenterAppCompatActivity<TestPresenter, TestViewComponent> implements TestViewComponent {
 
   private TestBO mockBO;
   private View view;

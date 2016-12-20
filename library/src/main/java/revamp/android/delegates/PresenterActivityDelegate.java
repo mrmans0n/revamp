@@ -2,6 +2,7 @@ package revamp.android.delegates;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
@@ -10,7 +11,7 @@ import revamp.store.RetainableStoreImpl;
 
 public class PresenterActivityDelegate<V extends ViewComponent, P extends Presenter<V>> implements RetainableStore {
 
-  static final String PRESENTER_ID = "stored_presenter";
+  @VisibleForTesting static final String PRESENTER_ID = "stored_presenter";
   private final RetainableStore mRetainableStore;
   private final PresenterActivityDelegateCallback<V, P> mCallback;
 
