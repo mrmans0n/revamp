@@ -5,9 +5,6 @@ import android.view.View;
 
 import revamp.android.PresenterActivity;
 
-/**
- * Created by mrm on 4/6/15.
- */
 public class TestActivity extends PresenterActivity<TestPresenter, TestViewComponent> implements TestViewComponent {
 
     private TestBO mockBO;

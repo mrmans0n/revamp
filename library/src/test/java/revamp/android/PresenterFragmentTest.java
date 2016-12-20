@@ -17,14 +17,13 @@ import revamp.mocks.TestPresenter;
 import static org.robolectric.util.FragmentTestUtil.startFragment;
 
 /**
- * Created by mrm on 4/6/15.
+ * Tests {@link PresenterFragment}
  */
 @RunWith(CustomTestRunner.class)
 @Config(manifest = Config.NONE)
 public class PresenterFragmentTest {
 
-    @Mock
-    TestBO mockBO;
+    @Mock TestBO mockBO;
 
     @Before
     public void setup() {

@@ -4,9 +4,6 @@ import android.support.annotation.NonNull;
 
 import revamp.base.BasePresenter;
 
-/**
- * Mock class with increased visibility for testing
- */
 public class TestPresenter extends BasePresenter<TestBO, TestViewComponent> {
     public TestPresenter(@NonNull TestBO businessObject) {
         super(businessObject);

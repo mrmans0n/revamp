@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import revamp.android.PresenterActivity;
 import revamp.mocks.TestBO;
 import revamp.mocks.TestPresenter;
 import revamp.mocks.TestViewComponent;
@@ -14,15 +15,13 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * Created by mrm on 4/6/15.
+ * Tests {@link BasePresenter}
  */
 public class BasePresenterTest {
 
-    @Mock
-    private TestViewComponent viewComponent;
+    @Mock TestViewComponent viewComponent;
 
-    @Mock
-    private TestBO bo;
+    @Mock TestBO bo;
 
     private TestPresenter mPresenter;
 

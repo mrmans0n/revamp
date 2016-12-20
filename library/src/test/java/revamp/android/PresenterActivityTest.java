@@ -17,14 +17,13 @@ import revamp.mocks.TestBO;
 import revamp.mocks.TestPresenter;
 
 /**
- * Created by mrm on 4/6/15.
+ * Tests {@link PresenterActivity}
  */
 @RunWith(CustomTestRunner.class)
 @Config(manifest = Config.NONE)
 public class PresenterActivityTest {
 
-    @Mock
-    TestBO mockBO;
+    @Mock TestBO mockBO;
 
     @Before
     public void setup() {

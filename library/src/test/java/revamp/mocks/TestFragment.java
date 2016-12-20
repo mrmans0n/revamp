@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 
 import revamp.android.PresenterFragment;
 
-/**
- * Created by mrm on 4/6/15.
- */
 public class TestFragment extends PresenterFragment<TestPresenter, TestViewComponent> implements TestViewComponent {
 
     private TestBO mockBO;

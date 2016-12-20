@@ -1,5 +1,3 @@
-// Copyright (c) 2016-present Revamp
-
 package revamp.store;
 
 import junit.framework.Assert;
