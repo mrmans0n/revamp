@@ -12,9 +12,9 @@ import org.robolectric.annotation.Config;
 import org.robolectric.util.ActivityController;
 
 import revamp.CustomTestRunner;
-import revamp.mocks.MockActivity;
-import revamp.mocks.MockBO;
-import revamp.mocks.MockPresenter;
+import revamp.mocks.TestActivity;
+import revamp.mocks.TestBO;
+import revamp.mocks.TestPresenter;
 
 /**
  * Created by mrm on 4/6/15.
@@ -24,7 +24,7 @@ import revamp.mocks.MockPresenter;
 public class PresenterActivityTest {
 
     @Mock
-    MockBO mockBO;
+    TestBO mockBO;
 
     @Before
     public void setup() {
@@ -33,18 +33,18 @@ public class PresenterActivityTest {
 
     @Test
     public void test_activity_presenter_creation() {
-        ActivityController<MockActivity> controller = createMockActivity();
-        MockActivity activity = controller.get();
+        ActivityController<TestActivity> controller = createMockActivity();
+        TestActivity activity = controller.get();
         controller.create().start();
         Assert.assertNotNull(activity.presenter());
     }
 
     @Test
     public void test_activity_view_attachment() {
-        ActivityController<MockActivity> controller = createMockActivity();
-        MockActivity activity = controller.get();
+        ActivityController<TestActivity> controller = createMockActivity();
+        TestActivity activity = controller.get();
 
-        MockPresenter presenter = activity.presenter();
+        TestPresenter presenter = activity.presenter();
         Assert.assertFalse(presenter.isTaken());
 
         controller.create().start().resume();
@@ -55,11 +55,11 @@ public class PresenterActivityTest {
         Assert.assertFalse(presenter.isTaken());
     }
 
-    private ActivityController<MockActivity> createMockActivity() {
-        ActivityController<MockActivity> controller = Robolectric.buildActivity(MockActivity.class);
+    private ActivityController<TestActivity> createMockActivity() {
+        ActivityController<TestActivity> controller = Robolectric.buildActivity(TestActivity.class);
 
         // We want to inject the BO before calling onCreate or anything else
-        MockActivity activity = controller.get();
+        TestActivity activity = controller.get();
         activity.setBusinessObject(mockBO);
         return controller;
     }

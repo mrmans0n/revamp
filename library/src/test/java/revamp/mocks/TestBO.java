@@ -5,5 +5,5 @@ import revamp.base.BusinessObject;
 /**
  * Created by mrm on 4/6/15.
  */
-public class MockBO implements BusinessObject {
+public class TestBO implements BusinessObject {
 }

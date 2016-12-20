@@ -3,8 +3,8 @@ package revamp.android.delegates;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import revamp.android.store.RetainableStore;
-import revamp.android.store.RetainableStoreImpl;
+import revamp.store.RetainableStore;
+import revamp.store.RetainableStoreImpl;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 

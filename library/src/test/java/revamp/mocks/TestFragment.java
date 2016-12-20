@@ -11,9 +11,9 @@ import revamp.android.PresenterFragment;
 /**
  * Created by mrm on 4/6/15.
  */
-public class MockFragment extends PresenterFragment<MockPresenter, MockViewComponent> implements MockViewComponent {
+public class TestFragment extends PresenterFragment<TestPresenter, TestViewComponent> implements TestViewComponent {
 
-    private MockBO mockBO;
+    private TestBO mockBO;
     private View view;
 
     @Nullable
@@ -24,12 +24,12 @@ public class MockFragment extends PresenterFragment<MockPresenter, MockViewCompo
     }
 
 
-    public void setBusinessObject(MockBO bo) {
+    public void setBusinessObject(TestBO bo) {
         this.mockBO = bo;
     }
 
     @Override
-    public MockPresenter buildPresenter() {
-        return new MockPresenter(mockBO);
+    public TestPresenter buildPresenter() {
+        return new TestPresenter(mockBO);
     }
 }

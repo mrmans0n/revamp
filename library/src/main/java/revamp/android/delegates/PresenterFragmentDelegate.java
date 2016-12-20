@@ -12,8 +12,8 @@ import android.view.View;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import revamp.android.store.RetainableStore;
-import revamp.android.store.RetainableStoreImpl;
+import revamp.store.RetainableStore;
+import revamp.store.RetainableStoreImpl;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 

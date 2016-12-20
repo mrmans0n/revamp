@@ -7,8 +7,8 @@ import revamp.base.BasePresenter;
 /**
  * Mock class with increased visibility for testing
  */
-public class MockPresenter extends BasePresenter<MockBO, MockViewComponent> {
-    public MockPresenter(@NonNull MockBO businessObject) {
+public class TestPresenter extends BasePresenter<TestBO, TestViewComponent> {
+    public TestPresenter(@NonNull TestBO businessObject) {
         super(businessObject);
     }
 
@@ -18,12 +18,12 @@ public class MockPresenter extends BasePresenter<MockBO, MockViewComponent> {
     }
 
     @Override
-    public MockViewComponent view() {
+    public TestViewComponent view() {
         return super.view();
     }
 
     @Override
-    public MockBO bo() {
+    public TestBO bo() {
         return super.bo();
     }
 }

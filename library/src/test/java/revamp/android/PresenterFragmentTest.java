@@ -10,9 +10,9 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.annotation.Config;
 
 import revamp.CustomTestRunner;
-import revamp.mocks.MockBO;
-import revamp.mocks.MockFragment;
-import revamp.mocks.MockPresenter;
+import revamp.mocks.TestBO;
+import revamp.mocks.TestFragment;
+import revamp.mocks.TestPresenter;
 
 import static org.robolectric.util.FragmentTestUtil.startFragment;
 
@@ -24,7 +24,7 @@ import static org.robolectric.util.FragmentTestUtil.startFragment;
 public class PresenterFragmentTest {
 
     @Mock
-    MockBO mockBO;
+    TestBO mockBO;
 
     @Before
     public void setup() {
@@ -33,7 +33,7 @@ public class PresenterFragmentTest {
 
     @Test
     public void test_fragment_presenter_creation() {
-        MockFragment fragment = createMockFragment();
+        TestFragment fragment = createMockFragment();
         startFragment(fragment);
 
         Assert.assertNotNull(fragment.presenter());
@@ -41,9 +41,9 @@ public class PresenterFragmentTest {
 
     @Test
     public void test_fragment_view_attachment() {
-        MockFragment fragment = createMockFragment();
+        TestFragment fragment = createMockFragment();
 
-        MockPresenter presenter = fragment.presenter();
+        TestPresenter presenter = fragment.presenter();
         Assert.assertFalse(presenter.isTaken());
 
         startFragment(fragment);
@@ -55,8 +55,8 @@ public class PresenterFragmentTest {
 
     }
 
-    private MockFragment createMockFragment() {
-        MockFragment fragment = new MockFragment();
+    private TestFragment createMockFragment() {
+        TestFragment fragment = new TestFragment();
         fragment.setBusinessObject(mockBO);
         return fragment;
     }

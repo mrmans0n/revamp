@@ -8,9 +8,9 @@ import revamp.android.PresenterActivity;
 /**
  * Created by mrm on 4/6/15.
  */
-public class MockActivity extends PresenterActivity<MockPresenter, MockViewComponent> implements MockViewComponent {
+public class TestActivity extends PresenterActivity<TestPresenter, TestViewComponent> implements TestViewComponent {
 
-    private MockBO mockBO;
+    private TestBO mockBO;
     private View view;
 
     @Override
@@ -20,12 +20,12 @@ public class MockActivity extends PresenterActivity<MockPresenter, MockViewCompo
         setContentView(view);
     }
 
-    public void setBusinessObject(MockBO bo) {
+    public void setBusinessObject(TestBO bo) {
         this.mockBO = bo;
     }
 
     @Override
-    public MockPresenter buildPresenter() {
-        return new MockPresenter(mockBO);
+    public TestPresenter buildPresenter() {
+        return new TestPresenter(mockBO);
     }
 }
