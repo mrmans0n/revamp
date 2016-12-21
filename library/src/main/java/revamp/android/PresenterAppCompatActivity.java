@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import revamp.android.delegates.PresenterActivityDelegate;
 import revamp.android.delegates.PresenterActivityDelegateCallback;
-import revamp.store.RetainableStore;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
+import revamp.store.RetainableStore;
 
 public abstract class PresenterAppCompatActivity<P extends Presenter<V>, V extends ViewComponent> extends AppCompatActivity implements ViewComponent, PresenterActivityDelegateCallback<V, P>, RetainableStore {
 
