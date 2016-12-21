@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
-import org.robolectric.util.ActivityController;
 
 import revamp.CustomTestRunner;
 import revamp.mocks.TestActivity;
@@ -32,14 +31,12 @@ public class PresenterFragmentDelegateTest {
   @Mock private TestPresenter mPresenter;
   @Mock private TestViewComponent mViewComponent;
   @Mock private TestBO mBO;
-  private ActivityController<TestActivity> mActivityController;
   private TestActivity mActivity;
 
   @Before
   public void setup() {
     MockitoAnnotations.initMocks(this);
-    mActivityController = Robolectric.buildActivity(TestActivity.class);
-    mActivity = mActivityController.get();
+    mActivity = Robolectric.buildActivity(TestActivity.class).get();
     mActivity.setBusinessObject(mBO);
 
     when(mDelegateCallback.shouldRetain()).thenReturn(true);
@@ -72,6 +69,16 @@ public class PresenterFragmentDelegateTest {
     PresenterFragmentDelegate<TestViewComponent, TestPresenter> delegate = new PresenterFragmentDelegate<>(mDelegateCallback, mActivity);
     delegate.onCreate(null);
     verify(mDelegateCallback, never()).setRetainedPresenter(any(TestPresenter.class));
+  }
+
+  @Test
+  public void testCreatePresenterThenRotate() {
+    PresenterFragmentDelegate<TestViewComponent, TestPresenter> delegate = new PresenterFragmentDelegate<>(mDelegateCallback, mActivity);
+    delegate.onCreate(null);
+    Bundle state = new Bundle();
+    delegate.onSaveInstanceState(state);
+    delegate.onCreate(state);
+    verify(mDelegateCallback).setRetainedPresenter(mPresenter);
   }
 
   @Test
