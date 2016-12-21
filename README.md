@@ -3,7 +3,7 @@ Revamp
 
 [![Build Status](https://travis-ci.org/mrmans0n/revamp.svg?branch=master)](https://travis-ci.org/mrmans0n/revamp)
 
-Tiny MVP framework for Android.
+Tiny opinionated MVP framework for Android. Retains presenters on rotation. 
 
 Adding to your project
 ----------------------
@@ -11,7 +11,7 @@ Adding to your project
 Add this to your dependencies:
 
 ```groovy
-compile 'io.nlopez.revamp:library:1.0.2'
+compile 'io.nlopez.revamp:library:1.0.4'
 ```
 
 Usage
