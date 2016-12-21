@@ -10,9 +10,9 @@ import android.view.View;
 
 import revamp.android.delegates.PresenterFragmentDelegate;
 import revamp.android.delegates.PresenterFragmentDelegateCallback;
-import revamp.store.RetainableStore;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
+import revamp.store.RetainableStore;
 
 public abstract class PresenterFragment<P extends Presenter<V>, V extends ViewComponent> extends Fragment implements ViewComponent, PresenterFragmentDelegateCallback<V, P>, RetainableStore {
 

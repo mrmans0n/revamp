@@ -39,16 +39,21 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
       mStoreId = savedInstanceState.getInt(STORE_ID);
       presenter = (P) getStore().get(mStoreId);
       if (presenter == null) {
-        throw new RuntimeException("Presenter is null in store but there is a storeId so it should not");
+        presenter = createPresenter();
+      } else {
+        mCallback.setRetainedPresenter(presenter);
       }
-      mCallback.setRetainedPresenter(presenter);
     } else {
-      // If there is no stored info or presenter, we create a new cache and store it
-      mStoreId = getStore().generateId();
-      presenter = mCallback.presenter();
-      getStore().put(mStoreId, presenter);
+      presenter = createPresenter();
     }
     presenter.takeView(mCallback.viewComponent());
+  }
+
+  private P createPresenter() {
+    mStoreId = getStore().generateId();
+    P presenter = mCallback.presenter();
+    getStore().put(mStoreId, presenter);
+    return presenter;
   }
 
   public void onDestroy() {
@@ -167,7 +172,7 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
    */
   @VisibleForTesting
   static final class PresenterStore {
-    private static AtomicInteger sCount = new AtomicInteger(0);
+    private static AtomicInteger sCount = new AtomicInteger(1);
     private SparseArrayCompat<Presenter> mRetainedObjects = new SparseArrayCompat<>();
 
     void put(int key, Presenter presenter) {
@@ -176,6 +181,10 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
 
     Presenter get(int key) {
       return mRetainedObjects.get(key);
+    }
+
+    void remove(int key) {
+      mRetainedObjects.remove(key);
     }
 
     int generateId() {
