@@ -1,6 +1,6 @@
 // Copyright (c) 2016-present Revamp
 
-package revamp.android.store;
+package revamp.store;
 
 import android.support.v4.util.ArrayMap;
 

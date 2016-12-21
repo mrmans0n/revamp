@@ -1,7 +1,6 @@
 package revamp.android.delegates;
 
-import revamp.android.store.Retainable;
-import revamp.android.store.RetainableStore;
+import revamp.store.Retainable;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 

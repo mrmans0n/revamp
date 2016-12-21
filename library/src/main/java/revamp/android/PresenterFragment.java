@@ -10,7 +10,7 @@ import android.view.View;
 
 import revamp.android.delegates.PresenterFragmentDelegate;
 import revamp.android.delegates.PresenterFragmentDelegateCallback;
-import revamp.android.store.RetainableStore;
+import revamp.store.RetainableStore;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 

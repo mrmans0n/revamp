@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import revamp.android.delegates.PresenterActivityDelegate;
 import revamp.android.delegates.PresenterActivityDelegateCallback;
-import revamp.android.store.RetainableStore;
+import revamp.store.RetainableStore;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
 

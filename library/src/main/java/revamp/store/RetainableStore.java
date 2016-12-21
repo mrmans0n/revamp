@@ -1,4 +1,4 @@
-package revamp.android.store;
+package revamp.store;
 
 public interface RetainableStore {
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.SparseArrayCompat;
@@ -12,14 +13,14 @@ import android.view.View;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import revamp.android.store.RetainableStore;
-import revamp.android.store.RetainableStoreImpl;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
+import revamp.store.RetainableStore;
+import revamp.store.RetainableStoreImpl;
 
 public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presenter<V>> implements RetainableStore {
-  private static final String FRAGMENT_TAG = "revamp_fragment";
-  private static final String STORE_ID = "revamp_store_id";
+  @VisibleForTesting static final String FRAGMENT_TAG = "revamp_fragment";
+  @VisibleForTesting static final String STORE_ID = "revamp_store_id";
   private PresenterFragmentDelegateCallback<V, P> mCallback;
   private WeakReference<Activity> mActivityRef;
   private int mStoreId;
@@ -134,7 +135,8 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
     return fragmentStore;
   }
 
-  private PresenterStore getStore() {
+  @VisibleForTesting
+  PresenterStore getStore() {
     return getStoreFragment().store();
   }
 
@@ -163,7 +165,8 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
   /**
    * Common structure for holding presenters and generating their ids
    */
-  private static final class PresenterStore {
+  @VisibleForTesting
+  static final class PresenterStore {
     private static AtomicInteger sCount = new AtomicInteger(0);
     private SparseArrayCompat<Presenter> mRetainedObjects = new SparseArrayCompat<>();
 

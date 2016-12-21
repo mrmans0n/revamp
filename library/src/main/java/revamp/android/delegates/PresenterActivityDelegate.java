@@ -2,21 +2,22 @@ package revamp.android.delegates;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
-import revamp.android.store.RetainableStore;
-import revamp.android.store.RetainableStoreImpl;
 import revamp.base.Presenter;
 import revamp.base.ViewComponent;
+import revamp.store.RetainableStore;
+import revamp.store.RetainableStoreImpl;
 
 public class PresenterActivityDelegate<V extends ViewComponent, P extends Presenter<V>> implements RetainableStore {
 
-  private static final String PRESENTER_ID = "stored_presenter";
+  @VisibleForTesting static final String PRESENTER_ID = "stored_presenter";
   private final RetainableStore mRetainableStore;
   private final PresenterActivityDelegateCallback<V, P> mCallback;
 
   public PresenterActivityDelegate(@NonNull PresenterActivityDelegateCallback<V, P> callback, Object lastNonConfigurationInstance) {
     mCallback = callback;
-    if (lastNonConfigurationInstance != null) {
+    if (lastNonConfigurationInstance != null && callback.shouldRetain()) {
       mRetainableStore = (RetainableStore) lastNonConfigurationInstance;
       callback.setRetainedPresenter((P) mRetainableStore.restoreRetained(PRESENTER_ID));
     } else {

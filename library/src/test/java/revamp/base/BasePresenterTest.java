@@ -5,45 +5,44 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import revamp.mocks.MockBO;
-import revamp.mocks.MockPresenter;
-import revamp.mocks.MockViewComponent;
+import revamp.android.PresenterActivity;
+import revamp.mocks.TestBO;
+import revamp.mocks.TestPresenter;
+import revamp.mocks.TestViewComponent;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * Created by mrm on 4/6/15.
+ * Tests {@link BasePresenter}
  */
 public class BasePresenterTest {
 
-    @Mock
-    private MockViewComponent viewComponent;
+    @Mock TestViewComponent viewComponent;
 
-    @Mock
-    private MockBO bo;
+    @Mock TestBO bo;
 
-    private MockPresenter mockPresenter;
+    private TestPresenter mPresenter;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        mockPresenter = new MockPresenter(bo);
+        mPresenter = new TestPresenter(bo);
     }
 
     @Test
     public void test_bo() {
-        assertEquals(mockPresenter.bo(), bo);
+        assertEquals(mPresenter.bo(), bo);
     }
 
     @Test
     public void test_view_attachment() {
-        assertFalse(mockPresenter.isTaken());
-        mockPresenter.takeView(viewComponent);
-        assertTrue(mockPresenter.isTaken());
-        assertEquals(mockPresenter.view(), viewComponent);
-        mockPresenter.dropView();
-        assertFalse(mockPresenter.isTaken());
+        assertFalse(mPresenter.isTaken());
+        mPresenter.takeView(viewComponent);
+        assertTrue(mPresenter.isTaken());
+        assertEquals(mPresenter.view(), viewComponent);
+        mPresenter.dropView();
+        assertFalse(mPresenter.isTaken());
     }
 }
