@@ -108,7 +108,7 @@ public abstract class PresenterAppCompatActivity<P extends Presenter<V>, V exten
 
   private PresenterActivityDelegate<V, P> getPresenterDelegate() {
     if (mDelegate == null) {
-      mDelegate = new PresenterActivityDelegate<>(this, getLastNonConfigurationInstance());
+      mDelegate = new PresenterActivityDelegate<>(this, getLastCustomNonConfigurationInstance());
     }
     return mDelegate;
   }

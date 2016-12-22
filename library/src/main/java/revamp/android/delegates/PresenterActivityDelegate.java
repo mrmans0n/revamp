@@ -18,6 +18,9 @@ public class PresenterActivityDelegate<V extends ViewComponent, P extends Presen
   public PresenterActivityDelegate(@NonNull PresenterActivityDelegateCallback<V, P> callback, Object lastNonConfigurationInstance) {
     mCallback = callback;
     if (lastNonConfigurationInstance != null && callback.shouldRetain()) {
+      if (!(lastNonConfigurationInstance instanceof RetainableStore)) {
+        throw new IllegalArgumentException("lastNonConfigurationInstance is not a RetainableStore");
+      }
       mRetainableStore = (RetainableStore) lastNonConfigurationInstance;
       callback.setRetainedPresenter((P) mRetainableStore.restoreRetained(PRESENTER_ID));
     } else {
