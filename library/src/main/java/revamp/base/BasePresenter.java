@@ -13,6 +13,9 @@ import java.lang.reflect.Proxy;
 
 /**
  * Provides basic functionality for all presenters.
+ * Automatically creates an empty {@link ViewComponent} implementation that performs no action
+ * when the presenter hasn't got an attached one, thus minimizing the possible {@link NullPointerException}
+ * when something is called in a an empty {@link ViewComponent} reference.
  */
 public abstract class BasePresenter<BO extends BusinessObject, V extends ViewComponent> implements Presenter<V> {
 
@@ -54,10 +57,16 @@ public abstract class BasePresenter<BO extends BusinessObject, V extends ViewCom
     mViewComponent = view;
   }
 
+  /**
+   * @return true if there is an attached {@link ViewComponent}
+   */
   public boolean isTaken() {
     return mViewComponent != null && mViewComponent != mEmptyViewComponent;
   }
 
+  /**
+   * @return true if the current {@link ViewComponent} is an EmptyViewComponent
+   */
   public boolean isUsingEmptyViewComponent() {
     return isEmptyViewComponentEnabled() && mViewComponent != null && mViewComponent == mEmptyViewComponent;
   }
@@ -70,6 +79,11 @@ public abstract class BasePresenter<BO extends BusinessObject, V extends ViewCom
     return mBusinessObject;
   }
 
+  /**
+   * Override if you prefer to handle nulls yourself on {@link #view()} invocations.
+   *
+   * @return true for automatic empty {@link ViewComponent}, false to handle {@link #view()} nullity by yourself.
+   */
   protected boolean isEmptyViewComponentEnabled() {
     return true;
   }

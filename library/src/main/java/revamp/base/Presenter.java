@@ -1,7 +1,7 @@
 package revamp.base;
 
 /**
- * Marks the directors for the orchestra
+ * Basic presenter that can attach and detach {@link ViewComponent} classes.
  */
 public interface Presenter<V extends ViewComponent> {
   void takeView(V view);
