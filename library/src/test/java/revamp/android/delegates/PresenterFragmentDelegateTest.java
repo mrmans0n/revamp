@@ -10,10 +10,10 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 
 import revamp.CustomTestRunner;
-import revamp.mocks.TestActivity;
-import revamp.mocks.TestBO;
-import revamp.mocks.TestPresenter;
-import revamp.mocks.TestViewComponent;
+import revamp.testing.TestActivity;
+import revamp.testing.TestBO;
+import revamp.testing.TestPresenter;
+import revamp.testing.TestViewComponent;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;

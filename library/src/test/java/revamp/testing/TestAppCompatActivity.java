@@ -1,4 +1,4 @@
-package revamp.mocks;
+package revamp.testing;
 
 import android.os.Bundle;
 import android.view.View;
@@ -24,5 +24,10 @@ public class TestAppCompatActivity extends PresenterAppCompatActivity<TestPresen
   @Override
   public TestPresenter buildPresenter() {
     return new TestPresenter(mockBO);
+  }
+
+  @Override
+  public void displayElements(String persistedString) {
+    // some viewcomponent method
   }
 }

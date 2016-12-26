@@ -10,5 +10,6 @@
         android:targetSdkVersion="21" />
     <application>
 
+        <activity android:name=".testing.TestActivity"/>
     </application>
 </manifest>

@@ -1,4 +1,4 @@
-package revamp.mocks;
+package revamp.testing;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,7 +20,6 @@ public class TestSupportFragment extends PresenterSupportFragment<TestPresenter,
     return view;
   }
 
-
   public void setBusinessObject(TestBO bo) {
     this.mockBO = bo;
   }
@@ -28,5 +27,10 @@ public class TestSupportFragment extends PresenterSupportFragment<TestPresenter,
   @Override
   public TestPresenter buildPresenter() {
     return new TestPresenter(mockBO);
+  }
+
+  @Override
+  public void displayElements(String persistedString) {
+    // some viewcomponent method
   }
 }

@@ -1,4 +1,4 @@
-package revamp.mocks;
+package revamp.testing;
 
 import android.support.annotation.NonNull;
 
@@ -22,5 +22,15 @@ public class TestPresenter extends BasePresenter<TestBO, TestViewComponent> {
   @Override
   public TestBO bo() {
     return super.bo();
+  }
+
+  public void loadData() {
+    String persistedString = bo().getPersistedString();
+    view().displayElements(persistedString);
+  }
+
+  @Override
+  protected boolean isEmptyViewComponentEnabled() {
+    return false;
   }
 }

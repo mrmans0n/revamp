@@ -3,9 +3,12 @@ package revamp.store;
 import junit.framework.Assert;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import revamp.base.Presenter;
 
@@ -14,14 +17,13 @@ import revamp.base.Presenter;
  */
 public class RetainableStoreImplTest {
 
-  @Mock
-  Presenter mPresenter;
+  @Rule public MockitoRule mRule = MockitoJUnit.rule();
+  @Mock Presenter mPresenter;
 
   private RetainableStoreImpl mStore;
 
   @Before
   public void setup() {
-    MockitoAnnotations.initMocks(this);
     mStore = new RetainableStoreImpl();
   }
 

@@ -4,7 +4,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 
-version '1.0.6'
+version '1.0.7'
 group 'io.nlopez.revamp'
 
 dependencies {
@@ -15,10 +15,11 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:support-annotations:25.1.0'
+    compile 'net.jodah:typetools:0.4.8'
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.1'
     testCompile 'org.robolectric:robolectric-shadows:3.1'
-    testCompile 'org.mockito:mockito-core:2.0.86-beta'
+    testCompile 'org.mockito:mockito-core:2.4.2'
 }
 
 android {
@@ -53,6 +54,10 @@ def isReleaseBuild() {
     return version.contains("SNAPSHOT") == false
 }
 
+def getProperty(project, property) {
+    return project.hasProperty(property) ? project.property(property) : ""
+}
+
 signing {
     required { isReleaseBuild() && gradle.taskGraph.hasTask("uploadArchives") }
     sign configurations.archives
@@ -63,13 +68,13 @@ uploadArchives {
     repositories.mavenDeployer {
         beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-        repository(url: sonatypeRepo) {
-            authentication(userName: sonatypeUsername,
-                    password: sonatypePassword)
+        repository(url: getProperty(project, "sonatypeRepo")) {
+            authentication(userName: getProperty(project, "sonatypeUsername"),
+                    password: getProperty(project, "sonatypePassword"))
         }
-        snapshotRepository(url: sonatypeSnapshotRepo) {
-            authentication(userName: sonatypeUsername,
-                    password: sonatypePassword)
+        snapshotRepository(url: getProperty(project, "sonatypeSnapshotRepo")) {
+            authentication(userName: getProperty(project, "sonatypeUsername"),
+                    password: getProperty(project, "sonatypePassword"))
         }
 
         pom.project {
