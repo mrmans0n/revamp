@@ -55,10 +55,10 @@ public abstract class BasePresenter<BO extends BusinessObject, V extends ViewCom
   }
 
   public boolean isTaken() {
-    return mViewComponent != null;
+    return mViewComponent != null && mViewComponent != mEmptyViewComponent;
   }
 
-  public boolean isEmptyViewComponent() {
+  public boolean isUsingEmptyViewComponent() {
     return isEmptyViewComponentEnabled() && mViewComponent != null && mViewComponent == mEmptyViewComponent;
   }
 

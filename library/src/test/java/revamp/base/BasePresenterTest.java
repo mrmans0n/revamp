@@ -59,14 +59,15 @@ public class BasePresenterTest {
 
   @Test
   public void testEmptyViewAttachCycle() {
-    assertTrue(mEmptyViewPresenter.isTaken());
-    assertTrue(mEmptyViewPresenter.isEmptyViewComponent());
+    assertFalse(mEmptyViewPresenter.isTaken());
+    assertTrue(mEmptyViewPresenter.isUsingEmptyViewComponent());
     mEmptyViewPresenter.takeView(mViewComponent);
     assertTrue(mEmptyViewPresenter.isTaken());
-    assertFalse(mEmptyViewPresenter.isEmptyViewComponent());
+    assertFalse(mEmptyViewPresenter.isUsingEmptyViewComponent());
     assertEquals(mEmptyViewPresenter.view(), mViewComponent);
     mEmptyViewPresenter.dropView();
-    assertTrue(mEmptyViewPresenter.isEmptyViewComponent());
+    assertFalse(mEmptyViewPresenter.isTaken());
+    assertTrue(mEmptyViewPresenter.isUsingEmptyViewComponent());
   }
 
   @Test
