@@ -11,7 +11,7 @@ Adding to your project
 Add this to your dependencies:
 
 ```groovy
-compile 'io.nlopez.revamp:library:1.0.7'
+compile 'io.nlopez.revamp:library:1.0.8'
 ```
 
 Usage
