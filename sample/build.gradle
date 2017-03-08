@@ -18,11 +18,11 @@ repositories {
 
 dependencies {
     compile project(':library')
-    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:support-v13:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'io.nlopez.smartadapters:library:1.3.0'
-    compile 'com.android.support:support-v13:25.1.0'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
+    compile 'io.nlopez.drebin:library:1.0.0'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }

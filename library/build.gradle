@@ -4,7 +4,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 
-version '1.0.7'
+version '1.0.8'
 group 'io.nlopez.revamp'
 
 dependencies {
@@ -12,9 +12,9 @@ dependencies {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
-
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:support-annotations:25.1.0'
+    compile 'com.android.support:support-v4:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:support-annotations:25.2.0'
     compile 'net.jodah:typetools:0.4.8'
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.1'

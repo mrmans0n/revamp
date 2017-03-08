@@ -9,14 +9,13 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import drebin.Drebin;
+import io.nlopez.revamp.sample.binders.ClickableElementEnvironment;
+import io.nlopez.revamp.sample.binders.UserBinder;
 import io.nlopez.revamp.sample.model.User;
 import io.nlopez.revamp.sample.users.UsersBO;
 import io.nlopez.revamp.sample.users.UsersPresenter;
 import io.nlopez.revamp.sample.users.UsersViewComponent;
-import io.nlopez.revamp.sample.util.Interactions;
-import io.nlopez.revamp.sample.view.UserView;
-import io.nlopez.smartadapters.SmartAdapter;
-import io.nlopez.smartadapters.utils.ViewEventListener;
 import revamp.android.PresenterActivity;
 
 /**
@@ -25,11 +24,20 @@ import revamp.android.PresenterActivity;
  * <p/>
  * It is forced by default if you use the already set up PresenterActivity or similar.
  * If you want to implement your own though, you can do it by calling directly the methods of the delegates.
- * Just do it as it is portrated in PresenterActivity for example.
+ * Just do it as it is in PresenterActivity for example.
  */
-public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewComponent> implements UsersViewComponent, ViewEventListener<User> {
+public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewComponent> implements UsersViewComponent {
   @InjectView(R.id.recycler_view)
-  RecyclerView recyclerView;
+  RecyclerView mRecyclerView;
+
+  private final UserBinder mUserBinder = new UserBinder();
+  private final ClickableElementEnvironment<User> mEnvironment =
+          new ClickableElementEnvironment<>(new ClickableElementEnvironment.Listener<User>() {
+            @Override
+            public void onClick(View view, User user) {
+              presenter().userSelected(user);
+            }
+          });
 
   @Override
   public void onCreate(Bundle bundle) {
@@ -44,7 +52,7 @@ public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewCom
   }
 
   private void initView() {
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
 
   @Override
@@ -56,17 +64,11 @@ public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewCom
 
   @Override
   public void fillListWithUsers(List<User> users) {
-    SmartAdapter.items(users)
-            .map(User.class, UserView.class)
-            .listener(this)
-            .into(recyclerView);
-  }
-
-  @Override
-  public void onViewEvent(int actionId, User user, int position, View view) {
-    if (actionId == Interactions.USER_CLICKED) {
-      presenter().userSelected(user);
-    }
+    Drebin.with(this)
+            .items(users)
+            .binder(User.class, mUserBinder)
+            .environment(mEnvironment)
+            .into(mRecyclerView);
   }
 
   @Override
