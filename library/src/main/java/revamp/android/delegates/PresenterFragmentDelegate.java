@@ -58,6 +58,7 @@ public class PresenterFragmentDelegate<V extends ViewComponent, P extends Presen
 
   public void onDestroy() {
     mCallback.presenter().dropView();
+    mCallback.presenter().release();
     mActivityRef.clear();
     mActivityRef = null;
   }

@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import io.nlopez.revamp.sample.places.PlacesBO;
 import io.nlopez.revamp.sample.places.PlacesPresenter;
 import io.nlopez.revamp.sample.places.PlacesViewComponent;
@@ -19,7 +19,7 @@ import revamp.android.PresenterFragment;
 public class PlacesFragment extends PresenterFragment<PlacesPresenter, PlacesViewComponent> implements PlacesViewComponent {
   private static final String ARG_SECTION_NUMBER = "section_number";
 
-  @InjectView(R.id.section_label)
+  @BindView(R.id.section_label)
   TextView mTextView;
 
   public PlacesFragment() {
@@ -48,7 +48,7 @@ public class PlacesFragment extends PresenterFragment<PlacesPresenter, PlacesVie
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    ButterKnife.inject(this, view);
+    ButterKnife.bind(this, view);
     presenter().loadData();
   }
 

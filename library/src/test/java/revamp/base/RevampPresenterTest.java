@@ -22,11 +22,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Tests {@link BasePresenter}
+ * Tests {@link RevampPresenter}
  */
 @RunWith(CustomTestRunner.class)
 @Config(manifest = Config.NONE)
-public class BasePresenterTest {
+public class RevampPresenterTest {
 
   private static final String STRING_VALUE = ":)";
   @Rule public MockitoRule mRule = MockitoJUnit.rule();
@@ -76,6 +76,12 @@ public class BasePresenterTest {
     mPresenter.takeView(mViewComponent);
     mPresenter.loadData();
     verify(mViewComponent).displayElements(STRING_VALUE);
+  }
+
+  @Test
+  public void testPresenterReleasePropagatesToBusinessObject() {
+    mPresenter.release();
+    verify(mBusinessObject).release();
   }
 
   @Test(expected = NullPointerException.class)

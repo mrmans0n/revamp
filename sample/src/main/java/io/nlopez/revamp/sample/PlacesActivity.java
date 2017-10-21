@@ -9,14 +9,14 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class PlacesActivity extends Activity {
 
   private SectionsPagerAdapter mSectionsPagerAdapter;
 
-  @InjectView(R.id.container)
+  @BindView(R.id.container)
   ViewPager mViewPager;
 
   public static Intent createIntent(Context context) {
@@ -29,7 +29,7 @@ public class PlacesActivity extends Activity {
     setContentView(R.layout.activity_pager);
     getActionBar().setDisplayHomeAsUpEnabled(true);
 
-    ButterKnife.inject(this);
+    ButterKnife.bind(this);
     mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
     mViewPager.setAdapter(mSectionsPagerAdapter);
   }

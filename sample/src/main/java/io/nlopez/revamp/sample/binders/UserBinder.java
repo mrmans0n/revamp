@@ -7,10 +7,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import drebin.core.Binder;
-import drebin.core.BinderEnvironment;
 import drebin.core.ViewFactory;
 import drebin.core.ViewHost;
 import io.nlopez.revamp.sample.R;
@@ -47,15 +46,15 @@ public class UserBinder implements Binder<LinearLayout, UserBinder.UserViewHost,
   }
 
   static class UserViewHost extends ViewHost<LinearLayout> {
-    @InjectView(R.id.user_image)
+    @BindView(R.id.user_image)
     ImageView userImage;
 
-    @InjectView(R.id.user_text)
+    @BindView(R.id.user_text)
     TextView userText;
 
     public UserViewHost(LinearLayout view) {
       super(view);
-      ButterKnife.inject(this, view);
+      ButterKnife.bind(this, view);
     }
   }
 }

@@ -33,9 +33,12 @@ public class PresenterActivityDelegate<V extends ViewComponent, P extends Presen
     presenter.takeView(mCallback.viewComponent());
   }
 
-  public void onDestroy() {
+  public void onDestroy(boolean finishing) {
     Presenter presenter = mCallback.presenter();
     presenter.dropView();
+    if (finishing) {
+      presenter.release();
+    }
   }
 
   public void onStart() {

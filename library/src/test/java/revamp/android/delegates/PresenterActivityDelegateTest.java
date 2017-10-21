@@ -44,34 +44,44 @@ public class PresenterActivityDelegateTest {
   @Test
   public void testCreatePresenterIfNotRetaining() {
     when(mDelegateCallback.shouldRetain()).thenReturn(false);
-    PresenterActivityDelegate<TestViewComponent, TestPresenter> delegate = new PresenterActivityDelegate<>(mDelegateCallback, mRetainableStore);
+    final PresenterActivityDelegate<TestViewComponent, TestPresenter> delegate = new PresenterActivityDelegate<>(mDelegateCallback, mRetainableStore);
     verify(mDelegateCallback, never()).setRetainedPresenter(any(TestPresenter.class));
   }
 
   @Test
   public void testCreatePresenterIfLastNonConfigurationInstanceNull() {
     when(mDelegateCallback.shouldRetain()).thenReturn(false);
-    PresenterActivityDelegate<TestViewComponent, TestPresenter> delegate = new PresenterActivityDelegate<>(mDelegateCallback, null);
+    final PresenterActivityDelegate<TestViewComponent, TestPresenter> delegate = new PresenterActivityDelegate<>(mDelegateCallback, null);
     verify(mDelegateCallback, never()).setRetainedPresenter(any(TestPresenter.class));
   }
 
   @Test
   public void testAttachingViewOnCreate() {
-    PresenterActivityDelegate<TestViewComponent, TestPresenter> delegate = new PresenterActivityDelegate<>(mDelegateCallback, null);
+    final PresenterActivityDelegate<TestViewComponent, TestPresenter> delegate = new PresenterActivityDelegate<>(mDelegateCallback, null);
     delegate.onCreate(null);
     verify(mPresenter).takeView(mViewComponent);
   }
 
   @Test
-  public void testDetachingViewOnDestroy() {
-    PresenterActivityDelegate<TestViewComponent, TestPresenter> delegate = new PresenterActivityDelegate<>(mDelegateCallback, null);
-    delegate.onDestroy();
+  public void testDetachingViewOnDestroyAlsoReleasesIfDestroying() {
+    final PresenterActivityDelegate<TestViewComponent, TestPresenter> delegate = new PresenterActivityDelegate<>(mDelegateCallback, null);
+    delegate.onDestroy(true);
     verify(mPresenter).dropView();
+    verify(mPresenter).release();
   }
 
   @Test
+  public void testDetachingViewOnDestroyDoesntReleaseIfNotDestroying() {
+    final PresenterActivityDelegate<TestViewComponent, TestPresenter> delegate = new PresenterActivityDelegate<>(mDelegateCallback, null);
+    delegate.onDestroy(false);
+    verify(mPresenter).dropView();
+    verify(mPresenter, never()).release();
+  }
+
+
+  @Test
   public void testRetainObjectOnRotation() {
-    PresenterActivityDelegate<TestViewComponent, TestPresenter> delegate = new PresenterActivityDelegate<>(mDelegateCallback, mRetainableStore);
+    final PresenterActivityDelegate<TestViewComponent, TestPresenter> delegate = new PresenterActivityDelegate<>(mDelegateCallback, mRetainableStore);
     delegate.onRetainCustomNonConfigurationInstance();
     verify(mRetainableStore).retainObject(PRESENTER_ID, mPresenter);
   }

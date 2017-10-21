@@ -27,7 +27,7 @@ public abstract class PresenterAppCompatActivity<P extends Presenter<V>, V exten
   @CallSuper
   public void onDestroy() {
     super.onDestroy();
-    getPresenterDelegate().onDestroy();
+    getPresenterDelegate().onDestroy(isFinishing());
   }
 
   @Override

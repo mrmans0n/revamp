@@ -27,7 +27,7 @@ public abstract class PresenterActivity<P extends Presenter<V>, V extends ViewCo
   @CallSuper
   public void onDestroy() {
     super.onDestroy();
-    getPresenterDelegate().onDestroy();
+    getPresenterDelegate().onDestroy(isFinishing());
   }
 
   @Override

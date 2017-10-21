@@ -7,10 +7,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import drebin.core.Binder;
-import drebin.core.BinderEnvironment;
 import drebin.core.ViewFactory;
 import drebin.core.ViewHost;
 import io.nlopez.revamp.sample.R;
@@ -47,15 +46,15 @@ public class PlaceBinder implements Binder<LinearLayout, PlaceBinder.PlaceViewHo
   }
 
   static class PlaceViewHost extends ViewHost<LinearLayout> {
-    @InjectView(R.id.place_image)
+    @BindView(R.id.place_image)
     ImageView placeImage;
 
-    @InjectView(R.id.place_text)
+    @BindView(R.id.place_text)
     TextView placeText;
 
     public PlaceViewHost(LinearLayout view) {
       super(view);
-      ButterKnife.inject(this, view);
+      ButterKnife.bind(this, view);
     }
   }
 }

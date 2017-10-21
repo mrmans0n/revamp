@@ -14,6 +14,9 @@ import revamp.testing.TestBO;
 import revamp.testing.TestFragment;
 import revamp.testing.TestPresenter;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static org.robolectric.util.FragmentTestUtil.startFragment;
 
 /**
@@ -23,7 +26,7 @@ import static org.robolectric.util.FragmentTestUtil.startFragment;
 @Config(manifest = Config.NONE)
 public class PresenterFragmentTest {
 
-  @Mock TestBO mockBO;
+  @Mock TestBO mBO;
 
   @Before
   public void setup() {
@@ -40,23 +43,22 @@ public class PresenterFragmentTest {
 
   @Test
   public void testFragmentViewAttachment() {
-    TestFragment fragment = createMockFragment();
+    final TestFragment fragment = createMockFragment();
 
-    TestPresenter presenter = fragment.presenter();
-    Assert.assertFalse(presenter.isTaken());
+    final TestPresenter presenter = fragment.presenter();
+    assertFalse(presenter.isTaken());
 
     startFragment(fragment);
-    Assert.assertTrue(presenter.isTaken());
-    Assert.assertEquals(presenter.view(), fragment);
+    assertTrue(presenter.isTaken());
+    assertEquals(presenter.view(), fragment);
 
     fragment.onDestroy();
-    Assert.assertFalse(presenter.isTaken());
-
+    assertFalse(presenter.isTaken());
   }
 
   private TestFragment createMockFragment() {
     TestFragment fragment = new TestFragment();
-    fragment.setBusinessObject(mockBO);
+    fragment.setBusinessObject(mBO);
     return fragment;
   }
 

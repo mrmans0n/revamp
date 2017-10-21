@@ -6,12 +6,12 @@ import java.util.List;
 
 import io.nlopez.revamp.sample.model.User;
 import io.nlopez.revamp.sample.util.DataGenerator;
-import revamp.base.BusinessObject;
+import revamp.base.RevampBusinessObject;
 
 /**
  * Created by mrm on 4/6/15.
  */
-public class UsersBO implements BusinessObject {
+public class UsersBO extends RevampBusinessObject {
 
     public UsersBO() {
     }

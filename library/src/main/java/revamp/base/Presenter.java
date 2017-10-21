@@ -7,4 +7,6 @@ public interface Presenter<V extends ViewComponent> {
   void takeView(V view);
 
   void dropView();
+
+  void release();
 }

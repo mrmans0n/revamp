@@ -1,8 +1,8 @@
 package revamp.testing;
 
-import revamp.base.BusinessObject;
+import revamp.base.RevampBusinessObject;
 
-public class TestBO implements BusinessObject {
+public class TestBO extends RevampBusinessObject {
 
   public String getPersistedString() {
     return "something";

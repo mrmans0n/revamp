@@ -5,12 +5,12 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import io.nlopez.revamp.sample.model.User;
-import revamp.base.BasePresenter;
+import revamp.base.RevampPresenter;
 
 /**
  * Created by mrm on 4/6/15.
  */
-public class UsersPresenter extends BasePresenter<UsersBO, UsersViewComponent> {
+public class UsersPresenter extends RevampPresenter<UsersBO, UsersViewComponent> {
     public UsersPresenter(@NonNull UsersBO businessObject) {
         super(businessObject);
     }

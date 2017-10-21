@@ -1,5 +1,6 @@
 package revamp.base;
 
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -20,7 +21,8 @@ import java.lang.reflect.Proxy;
  * <p>
  * This behavior can be disabled overriding {@link #isEmptyViewComponentEnabled()} in your presenter.
  */
-public abstract class BasePresenter<BO extends BusinessObject, V extends ViewComponent> implements Presenter<V> {
+@SuppressWarnings("unchecked")
+public abstract class RevampPresenter<BO extends BusinessObject, V extends ViewComponent> implements Presenter<V> {
 
   @Nullable private V mViewComponent;
   @NonNull private final BO mBusinessObject;
@@ -35,9 +37,9 @@ public abstract class BasePresenter<BO extends BusinessObject, V extends ViewCom
     }
   };
 
-  public BasePresenter(@NonNull BO businessObject) {
+  public RevampPresenter(@NonNull BO businessObject) {
     mBusinessObject = businessObject;
-    Class<?>[] classes = TypeResolver.resolveRawArguments(BasePresenter.class, getClass());
+    Class<?>[] classes = TypeResolver.resolveRawArguments(RevampPresenter.class, getClass());
     mBusinessObjectClass = (Class<BO>) classes[0];
     mViewComponentClass = (Class<V>) classes[1];
     mEmptyViewComponent = createEmptyViewComponent();
@@ -48,13 +50,12 @@ public abstract class BasePresenter<BO extends BusinessObject, V extends ViewCom
     if (!isEmptyViewComponentEnabled()) {
       return null;
     }
-    V proxy = (V) Proxy.newProxyInstance(mViewComponentClass.getClassLoader(),
+    return (V) Proxy.newProxyInstance(mViewComponentClass.getClassLoader(),
             new Class<?>[]{mViewComponentClass},
             mViewComponentInvocationHandler);
-    return proxy;
   }
 
-
+  @CallSuper
   @Override
   public void takeView(@NonNull V view) {
     mViewComponent = view;
@@ -70,7 +71,7 @@ public abstract class BasePresenter<BO extends BusinessObject, V extends ViewCom
   /**
    * @return true if the current {@link ViewComponent} is an EmptyViewComponent
    */
-  public boolean isUsingEmptyViewComponent() {
+  protected boolean isUsingEmptyViewComponent() {
     return isEmptyViewComponentEnabled() && mViewComponent != null && mViewComponent == mEmptyViewComponent;
   }
 
@@ -91,8 +92,15 @@ public abstract class BasePresenter<BO extends BusinessObject, V extends ViewCom
     return true;
   }
 
+  @CallSuper
   @Override
   public void dropView() {
     mViewComponent = mEmptyViewComponent;
+  }
+
+  @CallSuper
+  @Override
+  public void release() {
+    bo().release();
   }
 }

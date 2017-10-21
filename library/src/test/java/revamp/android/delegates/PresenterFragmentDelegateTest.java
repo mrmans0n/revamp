@@ -93,5 +93,6 @@ public class PresenterFragmentDelegateTest {
     PresenterFragmentDelegate<TestViewComponent, TestPresenter> delegate = new PresenterFragmentDelegate<>(mDelegateCallback, mActivity);
     delegate.onDestroy();
     verify(mPresenter).dropView();
+    verify(mPresenter).release();
   }
 }

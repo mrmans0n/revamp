@@ -16,6 +16,10 @@ import revamp.testing.TestActivity;
 import revamp.testing.TestBO;
 import revamp.testing.TestPresenter;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+
 /**
  * Tests {@link PresenterActivity}
  */
@@ -23,7 +27,7 @@ import revamp.testing.TestPresenter;
 @Config(manifest = Config.NONE)
 public class PresenterActivityTest {
 
-  @Mock TestBO mockBO;
+  @Mock TestBO mBO;
 
   @Before
   public void setup() {
@@ -43,15 +47,15 @@ public class PresenterActivityTest {
     ActivityController<TestActivity> controller = createMockActivity();
     TestActivity activity = controller.get();
 
-    TestPresenter presenter = activity.presenter();
-    Assert.assertFalse(presenter.isTaken());
+    final TestPresenter presenter = activity.presenter();
+    assertFalse(presenter.isTaken());
 
     controller.create().start().resume();
-    Assert.assertTrue(presenter.isTaken());
+    assertTrue(presenter.isTaken());
     Assert.assertEquals(presenter.view(), activity);
 
     controller.pause().stop().destroy();
-    Assert.assertFalse(presenter.isTaken());
+    assertFalse(presenter.isTaken());
   }
 
   private ActivityController<TestActivity> createMockActivity() {
@@ -59,7 +63,7 @@ public class PresenterActivityTest {
 
     // We want to inject the BO before calling onCreate or anything else
     TestActivity activity = controller.get();
-    activity.setBusinessObject(mockBO);
+    activity.setBusinessObject(mBO);
     return controller;
   }
 

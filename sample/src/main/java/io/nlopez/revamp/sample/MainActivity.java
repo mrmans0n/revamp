@@ -7,8 +7,8 @@ import android.view.View;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import drebin.Drebin;
 import io.nlopez.revamp.sample.binders.ClickableElementEnvironment;
 import io.nlopez.revamp.sample.binders.UserBinder;
@@ -27,8 +27,7 @@ import revamp.android.PresenterActivity;
  * Just do it as it is in PresenterActivity for example.
  */
 public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewComponent> implements UsersViewComponent {
-  @InjectView(R.id.recycler_view)
-  RecyclerView mRecyclerView;
+  @BindView(R.id.list) RecyclerView mRecyclerView;
 
   private final UserBinder mUserBinder = new UserBinder();
   private final ClickableElementEnvironment<User> mEnvironment =
@@ -44,7 +43,7 @@ public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewCom
     super.onCreate(bundle);
     setContentView(R.layout.activity_recyclerview);
 
-    ButterKnife.inject(this);
+    ButterKnife.bind(this);
     initView();
 
     // We give control to the mPresenter and load the data
