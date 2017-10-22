@@ -11,7 +11,7 @@ import org.robolectric.Robolectric;
 
 import revamp.CustomTestRunner;
 import revamp.testing.TestActivity;
-import revamp.testing.TestBO;
+import revamp.testing.TestModel;
 import revamp.testing.TestPresenter;
 import revamp.testing.TestViewComponent;
 
@@ -30,7 +30,7 @@ public class PresenterFragmentDelegateTest {
   @Mock private PresenterFragmentDelegateCallback<TestViewComponent, TestPresenter> mDelegateCallback;
   @Mock private TestPresenter mPresenter;
   @Mock private TestViewComponent mViewComponent;
-  @Mock private TestBO mBO;
+  @Mock private TestModel mBO;
   private TestActivity mActivity;
 
   @Before

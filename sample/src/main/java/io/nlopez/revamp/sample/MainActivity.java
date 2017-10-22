@@ -13,7 +13,7 @@ import drebin.Drebin;
 import io.nlopez.revamp.sample.binders.ClickableElementEnvironment;
 import io.nlopez.revamp.sample.binders.UserBinder;
 import io.nlopez.revamp.sample.model.User;
-import io.nlopez.revamp.sample.users.UsersBO;
+import io.nlopez.revamp.sample.users.UsersModel;
 import io.nlopez.revamp.sample.users.UsersPresenter;
 import io.nlopez.revamp.sample.users.UsersViewComponent;
 import revamp.android.PresenterActivity;
@@ -58,7 +58,7 @@ public class MainActivity extends PresenterActivity<UsersPresenter, UsersViewCom
   public UsersPresenter buildPresenter() {
     // This is cached by one of the inherited classes so you have only to think about creating
     // a new one, and the framework will deal with reuse.
-    return new UsersPresenter(new UsersBO());
+    return new UsersPresenter(new UsersModel());
   }
 
   @Override

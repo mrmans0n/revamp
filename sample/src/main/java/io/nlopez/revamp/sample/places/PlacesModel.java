@@ -2,12 +2,12 @@
 
 package io.nlopez.revamp.sample.places;
 
-import revamp.base.RevampBusinessObject;
+import revamp.base.RevampModel;
 
-public class PlacesBO extends RevampBusinessObject {
+public class PlacesModel extends RevampModel {
   private final int mSectionNumber;
 
-  public PlacesBO(int sectionNumber) {
+  public PlacesModel(int sectionNumber) {
     mSectionNumber = sectionNumber;
   }
 

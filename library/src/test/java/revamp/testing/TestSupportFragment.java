@@ -10,7 +10,7 @@ import revamp.android.PresenterSupportFragment;
 
 public class TestSupportFragment extends PresenterSupportFragment<TestPresenter, TestViewComponent> implements TestViewComponent {
 
-  private TestBO mockBO;
+  private TestModel mockBO;
   private View view;
 
   @Nullable
@@ -20,7 +20,7 @@ public class TestSupportFragment extends PresenterSupportFragment<TestPresenter,
     return view;
   }
 
-  public void setBusinessObject(TestBO bo) {
+  public void setBusinessObject(TestModel bo) {
     this.mockBO = bo;
   }
 

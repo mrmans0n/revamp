@@ -7,7 +7,7 @@ import revamp.android.PresenterAppCompatActivity;
 
 public class TestAppCompatActivity extends PresenterAppCompatActivity<TestPresenter, TestViewComponent> implements TestViewComponent {
 
-  private TestBO mockBO;
+  private TestModel mockBO;
   private View view;
 
   @Override
@@ -17,7 +17,7 @@ public class TestAppCompatActivity extends PresenterAppCompatActivity<TestPresen
     setContentView(view);
   }
 
-  public void setBusinessObject(TestBO bo) {
+  public void setBusinessObject(TestModel bo) {
     this.mockBO = bo;
   }
 

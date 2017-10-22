@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import revamp.base.RevampPresenter;
 
-public class TestPresenter extends RevampPresenter<TestBO, TestViewComponent> {
-  public TestPresenter(@NonNull TestBO businessObject) {
+public class TestPresenter extends RevampPresenter<TestModel, TestViewComponent> {
+  public TestPresenter(@NonNull TestModel businessObject) {
     super(businessObject);
   }
 
@@ -14,18 +14,19 @@ public class TestPresenter extends RevampPresenter<TestBO, TestViewComponent> {
     return super.isTaken();
   }
 
+  @NonNull
   @Override
   public TestViewComponent view() {
     return super.view();
   }
 
   @Override
-  public TestBO bo() {
-    return super.bo();
+  public TestModel model() {
+    return super.model();
   }
 
   public void loadData() {
-    String persistedString = bo().getPersistedString();
+    String persistedString = model().getPersistedString();
     view().displayElements(persistedString);
   }
 

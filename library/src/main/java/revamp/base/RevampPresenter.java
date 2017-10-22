@@ -22,13 +22,13 @@ import java.lang.reflect.Proxy;
  * This behavior can be disabled overriding {@link #isEmptyViewComponentEnabled()} in your presenter.
  */
 @SuppressWarnings("unchecked")
-public abstract class RevampPresenter<BO extends BusinessObject, V extends ViewComponent> implements Presenter<V> {
+public abstract class RevampPresenter<MODEL extends Model, VIEW extends ViewComponent> implements Presenter<VIEW> {
 
-  @Nullable private V mViewComponent;
-  @NonNull private final BO mBusinessObject;
-  @NonNull private final Class<V> mViewComponentClass;
-  @NonNull private final Class<BO> mBusinessObjectClass;
-  @Nullable private final V mEmptyViewComponent;
+  @Nullable private VIEW mViewComponent;
+  @NonNull private final MODEL mModel;
+  @NonNull private final Class<VIEW> mViewComponentClass;
+  @NonNull private final Class<MODEL> mBusinessObjectClass;
+  @Nullable private final VIEW mEmptyViewComponent;
   @NonNull private final InvocationHandler mViewComponentInvocationHandler = new InvocationHandler() {
     @Override
     public Object invoke(Object o, Method method, Object[] args) throws Throwable {
@@ -37,27 +37,28 @@ public abstract class RevampPresenter<BO extends BusinessObject, V extends ViewC
     }
   };
 
-  public RevampPresenter(@NonNull BO businessObject) {
-    mBusinessObject = businessObject;
+  public RevampPresenter(@NonNull MODEL model) {
+    mModel = model;
     Class<?>[] classes = TypeResolver.resolveRawArguments(RevampPresenter.class, getClass());
-    mBusinessObjectClass = (Class<BO>) classes[0];
-    mViewComponentClass = (Class<V>) classes[1];
+    mBusinessObjectClass = (Class<MODEL>) classes[0];
+    mViewComponentClass = (Class<VIEW>) classes[1];
     mEmptyViewComponent = createEmptyViewComponent();
     mViewComponent = mEmptyViewComponent;
   }
 
-  private V createEmptyViewComponent() {
+  @Nullable
+  private VIEW createEmptyViewComponent() {
     if (!isEmptyViewComponentEnabled()) {
       return null;
     }
-    return (V) Proxy.newProxyInstance(mViewComponentClass.getClassLoader(),
+    return (VIEW) Proxy.newProxyInstance(mViewComponentClass.getClassLoader(),
             new Class<?>[]{mViewComponentClass},
             mViewComponentInvocationHandler);
   }
 
   @CallSuper
   @Override
-  public void takeView(@NonNull V view) {
+  public void takeView(@NonNull VIEW view) {
     mViewComponent = view;
   }
 
@@ -75,12 +76,19 @@ public abstract class RevampPresenter<BO extends BusinessObject, V extends ViewC
     return isEmptyViewComponentEnabled() && mViewComponent != null && mViewComponent == mEmptyViewComponent;
   }
 
-  protected V view() {
+  @NonNull
+  protected VIEW view() {
     return mViewComponent;
   }
 
-  protected BO bo() {
-    return mBusinessObject;
+  @Deprecated
+  protected MODEL bo() {
+    return model();
+  }
+
+  @NonNull
+  protected MODEL model() {
+    return mModel;
   }
 
   /**
@@ -101,6 +109,6 @@ public abstract class RevampPresenter<BO extends BusinessObject, V extends ViewC
   @CallSuper
   @Override
   public void release() {
-    bo().release();
+    model().release();
   }
 }

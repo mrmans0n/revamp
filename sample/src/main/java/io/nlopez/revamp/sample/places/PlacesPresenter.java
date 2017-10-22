@@ -6,13 +6,13 @@ import android.support.annotation.NonNull;
 
 import revamp.base.RevampPresenter;
 
-public class PlacesPresenter extends RevampPresenter<PlacesBO, PlacesViewComponent> {
-  public PlacesPresenter(@NonNull PlacesBO businessObject) {
-    super(businessObject);
+public class PlacesPresenter extends RevampPresenter<PlacesModel, PlacesViewComponent> {
+  public PlacesPresenter(@NonNull PlacesModel model) {
+    super(model);
   }
 
   public void loadData() {
-    int sectionNumber = bo().getSectionNumber();
+    int sectionNumber = model().getSectionNumber();
     view().showSectionNumber(sectionNumber);
   }
 }

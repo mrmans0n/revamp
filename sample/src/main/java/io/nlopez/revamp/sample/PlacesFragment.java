@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.nlopez.revamp.sample.places.PlacesBO;
+import io.nlopez.revamp.sample.places.PlacesModel;
 import io.nlopez.revamp.sample.places.PlacesPresenter;
 import io.nlopez.revamp.sample.places.PlacesViewComponent;
 import revamp.android.PresenterFragment;
@@ -59,6 +59,6 @@ public class PlacesFragment extends PresenterFragment<PlacesPresenter, PlacesVie
 
   @Override
   public PlacesPresenter buildPresenter() {
-    return new PlacesPresenter(new PlacesBO(getArguments().getInt(ARG_SECTION_NUMBER)));
+    return new PlacesPresenter(new PlacesModel(getArguments().getInt(ARG_SECTION_NUMBER)));
   }
 }

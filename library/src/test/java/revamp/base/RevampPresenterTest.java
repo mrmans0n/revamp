@@ -10,7 +10,7 @@ import org.mockito.junit.MockitoRule;
 import org.robolectric.annotation.Config;
 
 import revamp.CustomTestRunner;
-import revamp.testing.TestBO;
+import revamp.testing.TestModel;
 import revamp.testing.TestEmptyViewPresenter;
 import revamp.testing.TestPresenter;
 import revamp.testing.TestViewComponent;
@@ -31,20 +31,20 @@ public class RevampPresenterTest {
   private static final String STRING_VALUE = ":)";
   @Rule public MockitoRule mRule = MockitoJUnit.rule();
   @Mock TestViewComponent mViewComponent;
-  @Mock TestBO mBusinessObject;
+  @Mock TestModel mModel;
 
   private TestPresenter mPresenter;
   private TestEmptyViewPresenter mEmptyViewPresenter;
 
   @Before
   public void setup() {
-    mPresenter = new TestPresenter(mBusinessObject);
-    mEmptyViewPresenter = new TestEmptyViewPresenter(mBusinessObject);
+    mPresenter = new TestPresenter(mModel);
+    mEmptyViewPresenter = new TestEmptyViewPresenter(mModel);
   }
 
   @Test
-  public void testBO() {
-    assertEquals(mPresenter.bo(), mBusinessObject);
+  public void testModel() {
+    assertEquals(mPresenter.model(), mModel);
   }
 
   @Test
@@ -72,7 +72,7 @@ public class RevampPresenterTest {
 
   @Test
   public void testBasicPresenterAction() {
-    when(mBusinessObject.getPersistedString()).thenReturn(STRING_VALUE);
+    when(mModel.getPersistedString()).thenReturn(STRING_VALUE);
     mPresenter.takeView(mViewComponent);
     mPresenter.loadData();
     verify(mViewComponent).displayElements(STRING_VALUE);
@@ -81,7 +81,7 @@ public class RevampPresenterTest {
   @Test
   public void testPresenterReleasePropagatesToBusinessObject() {
     mPresenter.release();
-    verify(mBusinessObject).release();
+    verify(mModel).release();
   }
 
   @Test(expected = NullPointerException.class)

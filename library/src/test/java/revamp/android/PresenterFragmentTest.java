@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.annotation.Config;
 
 import revamp.CustomTestRunner;
-import revamp.testing.TestBO;
+import revamp.testing.TestModel;
 import revamp.testing.TestFragment;
 import revamp.testing.TestPresenter;
 
@@ -26,7 +26,7 @@ import static org.robolectric.util.FragmentTestUtil.startFragment;
 @Config(manifest = Config.NONE)
 public class PresenterFragmentTest {
 
-  @Mock TestBO mBO;
+  @Mock TestModel mModel;
 
   @Before
   public void setup() {
@@ -58,7 +58,7 @@ public class PresenterFragmentTest {
 
   private TestFragment createMockFragment() {
     TestFragment fragment = new TestFragment();
-    fragment.setBusinessObject(mBO);
+    fragment.setBusinessObject(mModel);
     return fragment;
   }
 

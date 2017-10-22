@@ -13,7 +13,7 @@ import org.robolectric.util.ActivityController;
 
 import revamp.CustomTestRunner;
 import revamp.testing.TestActivity;
-import revamp.testing.TestBO;
+import revamp.testing.TestModel;
 import revamp.testing.TestPresenter;
 
 import static junit.framework.Assert.assertFalse;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 @Config(manifest = Config.NONE)
 public class PresenterActivityTest {
 
-  @Mock TestBO mBO;
+  @Mock TestModel mModel;
 
   @Before
   public void setup() {
@@ -63,7 +63,7 @@ public class PresenterActivityTest {
 
     // We want to inject the BO before calling onCreate or anything else
     TestActivity activity = controller.get();
-    activity.setBusinessObject(mBO);
+    activity.setBusinessObject(mModel);
     return controller;
   }
 

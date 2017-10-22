@@ -6,14 +6,14 @@ import java.util.List;
 
 import io.nlopez.revamp.sample.model.User;
 import io.nlopez.revamp.sample.util.DataGenerator;
-import revamp.base.RevampBusinessObject;
+import revamp.base.RevampModel;
 
 /**
  * Created by mrm on 4/6/15.
  */
-public class UsersBO extends RevampBusinessObject {
+public class UsersModel extends RevampModel {
 
-    public UsersBO() {
+    public UsersModel() {
     }
 
     public List<User> getUsers() {
@@ -22,6 +22,6 @@ public class UsersBO extends RevampBusinessObject {
 
     public void storeUser(User user) {
         // TODO we would store this data in prefs or somewhere we like
-        Log.d(UsersBO.class.getCanonicalName(), "Stored user " + user);
+        Log.d(UsersModel.class.getCanonicalName(), "Stored user " + user);
     }
 }

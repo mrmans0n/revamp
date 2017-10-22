@@ -3,7 +3,7 @@ package revamp.testing;
 import android.support.annotation.NonNull;
 
 public class TestEmptyViewPresenter extends TestPresenter {
-  public TestEmptyViewPresenter(@NonNull TestBO businessObject) {
+  public TestEmptyViewPresenter(@NonNull TestModel businessObject) {
     super(businessObject);
   }
 
