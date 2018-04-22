@@ -1,19 +1,20 @@
-package revamp.base;
+package revamp.mvi;
 
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
-
 import net.jodah.typetools.TypeResolver;
+import revamp.base.Presenter;
+import revamp.base.ViewComponent;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
- * Provides basic functionality for all presenters.
+ * Provides basic functionality for MVI presenters.
  * <p>
  * Automatically creates an empty {@link ViewComponent} implementation that performs no action
  * when the presenter hasn't got an attached one, thus minimizing the possible {@link NullPointerException}
@@ -22,12 +23,10 @@ import java.lang.reflect.Proxy;
  * This behavior can be disabled overriding {@link #isEmptyViewComponentEnabled()} in your presenter.
  */
 @SuppressWarnings("unchecked")
-public abstract class RevampPresenter<MODEL extends Model, VIEW extends ViewComponent> implements Presenter<VIEW> {
+public class RevampMviPresenter<VIEW extends RevampViewStateRenderer> implements Presenter<VIEW> {
 
   @Nullable private VIEW mViewComponent;
-  @NonNull private final MODEL mModel;
   @NonNull private final Class<VIEW> mViewComponentClass;
-  @NonNull private final Class<MODEL> mBusinessObjectClass;
   @Nullable private final VIEW mEmptyViewComponent;
   @NonNull private final InvocationHandler mViewComponentInvocationHandler = new InvocationHandler() {
     @Override
@@ -37,11 +36,9 @@ public abstract class RevampPresenter<MODEL extends Model, VIEW extends ViewComp
     }
   };
 
-  public RevampPresenter(@NonNull MODEL model) {
-    mModel = model;
-    Class<?>[] classes = TypeResolver.resolveRawArguments(RevampPresenter.class, getClass());
-    mBusinessObjectClass = (Class<MODEL>) classes[0];
-    mViewComponentClass = (Class<VIEW>) classes[1];
+  public RevampMviPresenter() {
+    Class<?>[] classes = TypeResolver.resolveRawArguments(RevampMviPresenter.class, getClass());
+    mViewComponentClass = (Class<VIEW>) classes[0];
     mEmptyViewComponent = createEmptyViewComponent();
     mViewComponent = mEmptyViewComponent;
   }
@@ -52,8 +49,8 @@ public abstract class RevampPresenter<MODEL extends Model, VIEW extends ViewComp
       return null;
     }
     return (VIEW) Proxy.newProxyInstance(mViewComponentClass.getClassLoader(),
-            new Class<?>[]{mViewComponentClass},
-            mViewComponentInvocationHandler);
+        new Class<?>[]{mViewComponentClass},
+        mViewComponentInvocationHandler);
   }
 
   @CallSuper
@@ -81,16 +78,6 @@ public abstract class RevampPresenter<MODEL extends Model, VIEW extends ViewComp
     return mViewComponent;
   }
 
-  @Deprecated
-  protected MODEL bo() {
-    return model();
-  }
-
-  @NonNull
-  protected MODEL model() {
-    return mModel;
-  }
-
   /**
    * Override if you prefer to handle nulls yourself on {@link #view()} invocations.
    *
@@ -100,17 +87,10 @@ public abstract class RevampPresenter<MODEL extends Model, VIEW extends ViewComp
     return false;
   }
 
-  @CallSuper
-  @Override
-  public void dropView() {
+  @CallSuper @Override public void dropView() {
     mViewComponent = mEmptyViewComponent;
   }
 
-  @CallSuper
-  @Override
-  public void release() {
-    if (model() instanceof ReleasableModel) {
-      ((ReleasableModel)model()).release();
-    }
+  @CallSuper @Override public void release() {
   }
 }

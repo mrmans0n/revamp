@@ -1,4 +1,4 @@
-package revamp.base;
+package revamp.mvp;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -8,25 +8,22 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.robolectric.annotation.Config;
-
 import revamp.CustomTestRunner;
 import revamp.testing.TestEmptyViewPresenter;
 import revamp.testing.TestModel;
 import revamp.testing.TestPresenter;
 import revamp.testing.TestViewComponent;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Tests {@link RevampPresenter}
+ * Tests {@link RevampMvpPresenter}
  */
 @RunWith(CustomTestRunner.class)
 @Config(manifest = Config.NONE)
-public class RevampPresenterTest {
+public class RevampMvpPresenterTest {
 
   private static final String STRING_VALUE = ":)";
   @Rule public MockitoRule mRule = MockitoJUnit.rule();

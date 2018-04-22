@@ -4,9 +4,9 @@ package io.nlopez.revamp.sample.places;
 
 import android.support.annotation.NonNull;
 
-import revamp.base.RevampPresenter;
+import revamp.mvp.RevampMvpPresenter;
 
-public class PlacesPresenter extends RevampPresenter<PlacesModel, PlacesViewComponent> {
+public class PlacesPresenter extends RevampMvpPresenter<PlacesModel, PlacesViewComponent> {
   public PlacesPresenter(@NonNull PlacesModel model) {
     super(model);
   }

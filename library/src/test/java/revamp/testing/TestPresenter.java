@@ -2,9 +2,9 @@ package revamp.testing;
 
 import android.support.annotation.NonNull;
 
-import revamp.base.RevampPresenter;
+import revamp.mvp.RevampMvpPresenter;
 
-public class TestPresenter extends RevampPresenter<TestModel, TestViewComponent> {
+public class TestPresenter extends RevampMvpPresenter<TestModel, TestViewComponent> {
   public TestPresenter(@NonNull TestModel businessObject) {
     super(businessObject);
   }
