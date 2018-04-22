@@ -6,12 +6,12 @@ import java.util.List;
 
 import io.nlopez.revamp.sample.model.User;
 import io.nlopez.revamp.sample.util.DataGenerator;
-import revamp.base.RevampModel;
+import revamp.mvp.RevampMvpModel;
 
 /**
  * Created by mrm on 4/6/15.
  */
-public class UsersModel extends RevampModel {
+public class UsersModel extends RevampMvpModel {
 
     public UsersModel() {
     }

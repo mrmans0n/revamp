@@ -97,7 +97,7 @@ public abstract class RevampPresenter<MODEL extends Model, VIEW extends ViewComp
    * @return true for automatic empty {@link ViewComponent}, false to handle {@link #view()} nullity by yourself.
    */
   protected boolean isEmptyViewComponentEnabled() {
-    return true;
+    return false;
   }
 
   @CallSuper
@@ -109,6 +109,8 @@ public abstract class RevampPresenter<MODEL extends Model, VIEW extends ViewComp
   @CallSuper
   @Override
   public void release() {
-    model().release();
+    if (model() instanceof ReleasableModel) {
+      ((ReleasableModel)model()).release();
+    }
   }
 }
