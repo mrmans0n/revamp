@@ -10,8 +10,8 @@ import org.mockito.junit.MockitoRule;
 import org.robolectric.annotation.Config;
 
 import revamp.CustomTestRunner;
-import revamp.testing.TestModel;
 import revamp.testing.TestEmptyViewPresenter;
+import revamp.testing.TestModel;
 import revamp.testing.TestPresenter;
 import revamp.testing.TestViewComponent;
 

@@ -5,9 +5,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import revamp.store.RetainableStore;
 import revamp.testing.TestPresenter;
 import revamp.testing.TestViewComponent;
-import revamp.store.RetainableStore;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;

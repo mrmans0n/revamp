@@ -10,8 +10,8 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.annotation.Config;
 
 import revamp.CustomTestRunner;
-import revamp.testing.TestModel;
 import revamp.testing.TestFragment;
+import revamp.testing.TestModel;
 import revamp.testing.TestPresenter;
 
 import static junit.framework.Assert.assertEquals;

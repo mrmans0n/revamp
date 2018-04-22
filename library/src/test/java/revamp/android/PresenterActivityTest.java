@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
+import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
-import org.robolectric.util.ActivityController;
 
 import revamp.CustomTestRunner;
 import revamp.testing.TestActivity;
@@ -18,7 +18,6 @@ import revamp.testing.TestPresenter;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
 
 /**
  * Tests {@link PresenterActivity}
