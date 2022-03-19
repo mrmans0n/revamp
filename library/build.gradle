@@ -17,7 +17,7 @@ dependencies {
     compile 'com.android.support:support-v4:27.1.1'
     compile 'com.android.support:appcompat-v7:27.1.1'
     compile 'com.android.support:support-annotations:27.1.1'
-    compile 'net.jodah:typetools:0.4.8'
+    compile 'net.jodah:typetools:0.6.3'
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.5.1'
     testCompile 'org.robolectric:robolectric-shadows:3.1'
