@@ -26,6 +26,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'io.nlopez.drebin:library:1.0.1'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
